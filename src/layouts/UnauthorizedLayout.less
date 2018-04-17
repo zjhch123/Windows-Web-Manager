@@ -1,0 +1,27 @@
+@keyframes ani {
+  from {
+    background-color: rgba(0, 0, 0, .1)
+  }
+  to {
+    background-color: rgba(0, 0, 0, .6)
+  }
+}
+.g-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(135deg, #1890ff, white);
+  position: relative;
+  z-index: 1;
+  &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    animation: ani 5s infinite alternate-reverse;
+    z-index: 2;
+  }
+  height: 100%;
+}
