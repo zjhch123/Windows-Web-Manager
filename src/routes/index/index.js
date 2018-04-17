@@ -65,7 +65,7 @@ class Index extends React.Component {
               <p><span className={styles['u-system-info-title']}>CPU核心：</span>{ system.cpuCore }</p>
             </Card>
           </Col>
-        </Row>
+        </Row> 
         <Row className={styles["m-rows"]} gutter={16}>
           <Col span={6}>
             <Card loading={isLoading} hoverable title="服务器时间" bodyStyle={{ height: 80, overflow: 'hidden' }}>
