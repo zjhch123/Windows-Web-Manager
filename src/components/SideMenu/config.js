@@ -20,7 +20,8 @@ export default [
       {
         name: '项目列表',
         key: 'list',
-        path: '/project/list'
+        path: '/project/list',
+        component: require('../../routes/project/list/index.js').default
       }
     ]
   },

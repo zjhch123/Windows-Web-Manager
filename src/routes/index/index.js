@@ -68,22 +68,22 @@ class Index extends React.Component {
         </Row> 
         <Row className={styles["m-rows"]} gutter={16}>
           <Col span={6}>
-            <Card loading={isLoading} hoverable title="服务器时间" bodyStyle={{ height: 80, overflow: 'hidden' }}>
+            <Card loading={isLoading} hoverable title="服务器时间">
               <p>{ formatTime(time.system) }</p>
             </Card>
           </Col>
           <Col span={6}>
-            <Card loading={isLoading} hoverable title="启动时间" bodyStyle={{ height: 80, overflow: 'hidden' }}>
+            <Card loading={isLoading} hoverable title="启动时间">
               <p>{ formatTime(time.start) }</p>
             </Card>
           </Col>
           <Col span={6}>
-            <Card loading={isLoading} hoverable title="运行时间" bodyStyle={{ height: 80, overflow: 'hidden' }}>
+            <Card loading={isLoading} hoverable title="运行时间">
               <p>{ formatDateTime(time.run) }</p>
             </Card>
           </Col>
           <Col span={6}>
-            <Card loading={isLoading} hoverable title="空闲时间" bodyStyle={{ height: 80, overflow: 'hidden' }}>
+            <Card loading={isLoading} hoverable title="空闲时间">
               <p>{formatDateTime(time.free)}&nbsp;&nbsp;<Badge count={`${formatNumber(time.free / time.run * 100)}%`} /></p>
             </Card>
           </Col>

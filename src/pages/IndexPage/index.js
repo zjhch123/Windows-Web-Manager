@@ -33,6 +33,7 @@ class IndexPage extends React.Component {
               return <Route path={item.path} key={item.path} component={ item.component ? item.component : () => <div>{item.path}</div> }/>
             }) 
           }
+          <Route path='/project/edit/:id' component={() => <div>edit</div>}/>
           <Redirect to="/index/"/>
         </Switch>
       </IndexLayout>

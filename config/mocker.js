@@ -27,6 +27,95 @@ const proxy = {
         free: 15
       }
     }
+  },
+  'GET /api/getProjects': {
+    code: 200,
+    result: {
+      page: 1,
+      total: 18,
+      data: [
+        {
+          id: 1,
+          name: '测试项目1',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 1,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 2,
+          name: '测试项目2',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 0,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 3,
+          name: '测试项目3',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 1,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 4,
+          name: '测试项目4',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 0,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 5,
+          name: '测试项目5',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 1,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 6,
+          name: '测试项目6',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 0,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 7,
+          name: '测试项目6',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 0,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 8,
+          name: '测试项目6',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 0,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 9,
+          name: '测试项目6',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 0,
+          url: 'http://139.129.132.196:8888'
+        },
+        {
+          id: 10,
+          name: '测试项目6',
+          createTime: 1513371675612,
+          updateTime: 1512371675612,
+          status: 0,
+          url: 'http://139.129.132.196:8888'
+        },
+      ]
+    }
   }
 }
 
