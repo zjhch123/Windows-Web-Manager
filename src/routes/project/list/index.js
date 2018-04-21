@@ -1,5 +1,10 @@
 import React from 'react'
-import { Table } from 'antd'
+import {
+  Table,
+  Form,
+  DatePicker,
+  Row, Col,
+} from 'antd'
 import { connect } from 'dva'
 import { Link } from 'dva/router'
 import { formatTime } from '../../../utils/tools'
@@ -78,8 +83,47 @@ class List extends React.Component {
       page,
       total
     } = project
+    const formItemLayout = {
+      labelCol: {
+        xs: {
+          span: 24
+        },
+        sm: {
+          span: 8
+        },
+      },
+      wrapperCol: {
+        xs: {
+          span: 24
+        },
+        sm: {
+          span: 16
+        },
+      },
+    };
     return (
       <div className={styles['g-container']}>
+        <div className={styles['m-search']}>
+          <Form>
+            <Row>
+              <Col span={6}>
+                <Form.Item { ...formItemLayout} label = "创建时间" >
+                  <DatePicker.RangePicker />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item { ...formItemLayout} label = "创建时间" >
+                  <DatePicker.RangePicker />
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item { ...formItemLayout} label = "创建时间" >
+                  <DatePicker.RangePicker />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        </div>
         <Table 
           dataSource={projects} 
           columns={columns} 
