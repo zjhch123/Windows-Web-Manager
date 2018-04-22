@@ -1,4 +1,4 @@
-import { getProjects } from '../services/project'
+import { getProjects } from '@services/project'
 
 export default {
   namespace: 'project',

@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'dva'
 import { Card, Col, Row, Progress, Badge } from 'antd'
-import { formatNumber, formatTime, formatDateTime } from '../../utils/tools'
-import StoragePie from '../../components/Charts/StoragePie'
+import { formatNumber, formatTime, formatDateTime } from '@utils/tools'
+import StoragePie from '@components/Charts/StoragePie'
 import styles from './styles.less'
 
 class Index extends React.Component {

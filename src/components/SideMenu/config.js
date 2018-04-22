@@ -4,7 +4,7 @@ export default [
     key: 'index',
     icon: 'dashboard',
     path: '/index',
-    component: require('../../routes/index/index.js').default
+    component: require('@routes/index/index.js').default
   },
   {
     name: '项目管理',
@@ -21,7 +21,7 @@ export default [
         name: '项目列表',
         key: 'list',
         path: '/project/list',
-        component: require('../../routes/project/list/index.js').default
+        component: require('@routes/project/list/index.js').default
       }
     ]
   },

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Router, Route, Switch } from 'dva/router';
-import AuthorizedRoute from './components/AuthorizedRoute'
-import UnauthorizedPage from './pages/UnauthorizedPage/';
-import IndexPage from './pages/IndexPage';
+import AuthorizedRoute from '@components/AuthorizedRoute'
+import UnauthorizedPage from '@pages/UnauthorizedPage/';
+import IndexPage from '@pages/IndexPage';
 
 function RouterConfig({ history }) {
   return (

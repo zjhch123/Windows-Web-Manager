@@ -1,4 +1,4 @@
-import { login } from '../services/user'
+import { login } from '@services/user'
 
 export default {
   namespace: 'user',

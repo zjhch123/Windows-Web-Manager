@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Layout, Dropdown, Menu, Icon } from 'antd';
 import { withRouter } from 'dva/router'
-import SideMenu from '../components/SideMenu';
+import SideMenu from '@components/SideMenu';
 import styles from './IndexLayout.less';
 
 const { Header, Sider, Content } = Layout;

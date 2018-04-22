@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'dva'
 import { Redirect } from 'dva/router'
 import styles from './styles.less'
-import LoginForm from '../../components/Form/LoginForm'
-import UnauthorizedLayout from '../../layouts/UnauthorizedLayout';
+import LoginForm from '@components/Form/LoginForm'
+import UnauthorizedLayout from '@layouts/UnauthorizedLayout';
 
 
 class UnauthorizedPage extends React.Component {

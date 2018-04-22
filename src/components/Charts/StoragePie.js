@@ -1,7 +1,7 @@
 import React from 'react'
 import { Chart, Geom, Axis, Coord, Legend, Guide } from 'bizcharts'
 import { DataView } from '@antv/data-set'
-import { formatNumber } from '../../utils/tools'
+import { formatNumber } from '@utils/tools'
 const { Html } = Guide;
 
 class StoragePie extends React.Component {

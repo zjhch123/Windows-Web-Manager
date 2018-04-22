@@ -1,4 +1,4 @@
-import { getInfo } from '../services/system'
+import { getInfo } from '@services/system'
 
 const delay = (timeout) => {
   return new Promise(resolve => {

@@ -7,7 +7,7 @@ import {
 } from 'antd'
 import { connect } from 'dva'
 import { Link } from 'dva/router'
-import { formatTime } from '../../../utils/tools'
+import { formatTime } from '@utils/tools'
 import styles from './styles.less'
 
 const projectStatus = (status) => {
