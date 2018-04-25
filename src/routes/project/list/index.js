@@ -4,6 +4,9 @@ import {
   Form,
   DatePicker,
   Row, Col,
+  Select,
+  Input,
+  Button
 } from 'antd'
 import { connect } from 'dva'
 import { Link } from 'dva/router'
@@ -74,6 +77,10 @@ class List extends React.Component {
     this.dispatch({type: 'project/get'})
   }
 
+  handleSubmit(event) {
+    event.preventDefault()
+  }
+
   render() {
     const {
       project
@@ -85,17 +92,11 @@ class List extends React.Component {
     } = project
     const formItemLayout = {
       labelCol: {
-        xs: {
-          span: 24
-        },
         sm: {
           span: 8
         },
       },
       wrapperCol: {
-        xs: {
-          span: 24
-        },
         sm: {
           span: 16
         },
@@ -104,21 +105,34 @@ class List extends React.Component {
     return (
       <div className={styles['g-container']}>
         <div className={styles['m-search']}>
-          <Form>
+          <Form onSubmit={(event) => this.handleSubmit(event)}>
             <Row>
-              <Col span={6}>
-                <Form.Item { ...formItemLayout} label = "创建时间" >
-                  <DatePicker.RangePicker />
+              <Col span={5}>
+                <Form.Item { ...formItemLayout} label="项目名" >
+                  <Input />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item { ...formItemLayout} label = "创建时间" >
+                <Form.Item { ...formItemLayout} label="创建时间" >
                   <DatePicker.RangePicker />
                 </Form.Item>
               </Col>
-              <Col span={6}>
-                <Form.Item { ...formItemLayout} label = "创建时间" >
-                  <DatePicker.RangePicker />
+              <Col span={5}>
+                <Form.Item {...formItemLayout} label="项目链接" >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={5}>
+                <Form.Item {...formItemLayout} label="项目状态" >
+                  <Select defaultValue="0">
+                    <Select.Option value="0">运行中</Select.Option>
+                    <Select.Option value="1">已下线</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={3} align="center">
+                <Form.Item {...formItemLayout}>
+                  <Button type="primary" htmlType="submit">搜索</Button>
                 </Form.Item>
               </Col>
             </Row>

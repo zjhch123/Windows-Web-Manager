@@ -15,7 +15,8 @@ export default [
       {
         name: '新建项目',
         key: 'new',
-        path: '/project/new'
+        path: '/project/new',
+        component: require('@routes/project/new/index.js').default
       },
       {
         name: '项目列表',
