@@ -99,7 +99,9 @@ class New extends React.Component {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
                 rules: [
-                  { required: true }
+                  { required: true,
+                    message: '请上传项目文件' 
+                  }
                 ]
               })(
                 <Upload.Dragger name="files" action="/upload.do">
