@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Form, Switch, Input, 
+  Form, Switch, Input, Select, 
   Button, Upload, Icon
 } from 'antd';
 import styles from './styles.less';
@@ -11,6 +11,7 @@ class New extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      needSecondPath: false,
       shouldInjectScript: false
     }
   }
@@ -24,7 +25,13 @@ class New extends React.Component {
     });
   }
 
-  handleSwitchChange = (checked) => {
+  handlePathChange = (checked) => {
+    this.setState({
+      needSecondPath: checked
+    })
+  }
+
+  handleScriptChange = (checked) => {
     this.setState({
       shouldInjectScript: checked
     })
@@ -52,7 +59,7 @@ class New extends React.Component {
             label="项目名称"
             hasFeedback
           >
-            {getFieldDecorator('input', {
+            {getFieldDecorator('projectName', {
               rules: [
                 { required: true, message: '请输入项目名称!' },
               ],
@@ -62,16 +69,43 @@ class New extends React.Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="项目地址"
+            label="一级路径"
             hasFeedback
           >
-            <Input placeholder="请输入项目地址, 留空则自动生成 " />
+            {getFieldDecorator('projectName', {
+              rules: [
+                { required: true, message: '请选择一级路径' },
+              ],
+            })(
+              <Select>
+                <Select.Option value="http://139.129.132.196/">http://139.129.132.196/</Select.Option>
+                <Select.Option value="http://static.hduzplus.xyz/">http://static.hduzplus.xyz/</Select.Option>
+                <Select.Option value="http://api.hduzplus.xyz/">http://api.hduzplus.xyz/</Select.Option>
+              </Select>
+            )}
           </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="是否需要二级路径"
+          >
+            <Switch onChange={(checked) => this.handlePathChange(checked)} />
+          </FormItem>
+          {
+            this.state.needSecondPath ? (
+              <FormItem
+                {...formItemLayout}
+                label="二级路径"
+                hasFeedback
+              >
+                <Input placeholder="请输入二级路径，留空则自动生成" />
+              </FormItem>
+            ) : ''
+          }
           <FormItem
             {...formItemLayout}
             label="是否注入脚本"
           >
-            <Switch onChange={(checked) => this.handleSwitchChange(checked)}/>
+            <Switch onChange={(checked) => this.handleScriptChange(checked)}/>
           </FormItem>
           {
             this.state.shouldInjectScript ? (
@@ -80,9 +114,9 @@ class New extends React.Component {
                 label="脚本链接"
                 hasFeedback
               >
-                {getFieldDecorator('input', {
+                {getFieldDecorator('scriptURL', {
                   rules: [
-                    { required: true },
+                    { required: true, message: '请输入脚本链接!' },
                   ],
                 })(
                   <Input placeholder="请输入脚本链接" />
