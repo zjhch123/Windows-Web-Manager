@@ -97,7 +97,7 @@ class New extends React.Component {
                 label="二级路径"
                 hasFeedback
               >
-                <Input placeholder="请输入二级路径，留空则自动生成" />
+                <Input placeholder="请输入二级路径, 留空则自动生成" />
               </FormItem>
             ) : ''
           }
