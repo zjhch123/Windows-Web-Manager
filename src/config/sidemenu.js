@@ -2,7 +2,7 @@ export default [
   {
     name: '首页',
     key: 'index',
-    icon: 'dashboard',
+    icon: 'home',
     path: '/index',
     component: require('@routes/index/index.js').default
   },
