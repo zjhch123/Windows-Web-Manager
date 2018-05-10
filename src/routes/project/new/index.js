@@ -1,9 +1,10 @@
 import React from 'react'
 import {
   Form, Switch, Input, Select, 
-  Button, Upload, Icon
+  Button, Upload, Icon, Modal
 } from 'antd';
 import styles from './styles.less';
+import AddRouterForm from '@components/Form/AddRouterForm'
 const FormItem = Form.Item;
 
 class New extends React.Component {
@@ -12,7 +13,8 @@ class New extends React.Component {
     super(props)
     this.state = {
       needSecondPath: false,
-      shouldInjectScript: false
+      shouldInjectScript: false,
+      addRouterModal: false
     }
   }
 
@@ -43,6 +45,12 @@ class New extends React.Component {
       return e;
     }
     return e && e.fileList;
+  }
+
+  addRouter = (e) => {
+    this.setState({
+      addRouterModal: true
+    })
   }
 
   render() {
@@ -83,6 +91,7 @@ class New extends React.Component {
                 <Select.Option value="http://api.hduzplus.xyz/">http://api.hduzplus.xyz/</Select.Option>
               </Select>
             )}
+            <a href="javascript:;" onClick={() => this.addRouter()}>添加一级路径</a>
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -155,6 +164,14 @@ class New extends React.Component {
             <Button type="primary" htmlType="submit">走起!</Button>
           </FormItem>
         </Form>
+        <Modal
+          title="添加一级路径"
+          visible = {this.state.addRouterModal}
+          onCancel={() => this.setState({addRouterModal: false})}
+          footer={null}
+        >
+          <AddRouterForm />
+        </Modal>
       </div>
     );
   }

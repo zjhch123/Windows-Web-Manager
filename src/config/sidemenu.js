@@ -23,6 +23,12 @@ export default [
         key: 'list',
         path: '/project/list',
         component: require('@routes/project/list/index.js').default
+      },
+      {
+        name: '修改项目',
+        hidden: true,
+        key: 'edit',
+        path: '/project/edit/:id'
       }
     ]
   },
@@ -35,23 +41,25 @@ export default [
       {
         name: '运行环境',
         key: 'runtime',
-        path: '/env/runtime'
+        path: '/env/runtime',
+        component: require('@routes/env/runtime/index.js').default
       },
       {
-        name: '修改环境',
+        name: '修改环境配置',
         key: 'update',
-        path: '/env/update'
-      },
-      {
-        name: '依赖安装',
-        key: 'install_dep',
-        path: '/env/install_dep'
+        hidden: true,
+        path: '/env/update/:env'
       },
       {
         name: '文件管理',
         key: 'file_manage',
         path: '/env/file_manage'
       },
+      {
+        name: '一级路径',
+        key: 'router',
+        path: '/env/router'
+      }
     ]
   },
   {

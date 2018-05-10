@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'dva/router';
 import { Menu, Icon } from 'antd';
-import config from './config'
+import config from '@config/sidemenu';
 
 const SubMenu = Menu.SubMenu;
 
@@ -17,6 +17,9 @@ function renderBar(config) {
         </SubMenu>
       )
     } else {
+      if (element.hidden) {
+        return true
+      }
       return (
         <Menu.Item key={element.key}>
           <Link to={element.path}>
@@ -33,13 +36,14 @@ class SideBar extends React.Component {
 
   constructor(props) {
     super(props)
-    this.selectedKey = this.props.location.pathname.split('/')[2] || 'index'
-    this.openKey = this.props.location.pathname.split('/')[1] || 'project'
+    this.defaultOpenKeys = []
   }
 
   render() {
+    this.selectedKey = this.props.location.pathname.split('/')[2] || 'index'
+    this.openKey = this.props.location.pathname.split('/')[1] || 'project'
     return (
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={[this.selectedKey]} defaultOpenKeys={[this.openKey, 'project']}>
+      <Menu theme="dark" mode="inline" selectedKeys={[this.selectedKey]} defaultOpenKeys={[this.openKey]} >
         {renderBar(config)}
       </Menu>
     )

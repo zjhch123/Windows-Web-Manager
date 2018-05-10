@@ -23,21 +23,6 @@ class IndexLayout extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.history.path  !== this.props.history.path) {
-      return false
-    }
-    return true
-  }
-
-  handleMenuClick = ({ item, key }) => {
-    console.log(this.props.history)
-    // this.props.history.push('/index')
-    this.setState({
-      view: 1
-    })
-  }
-
   render() {
     return (
       <Layout className={styles["g-container"]}>
@@ -63,7 +48,5 @@ class IndexLayout extends React.Component {
     );
   }
 }
-
-
 
 export default withRouter(connect()(IndexLayout));

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Redirect, Switch, Route } from 'dva/router';
-import config from '@components/SideMenu/config';
+import config from '@config/sidemenu';
 import IndexLayout from '@layouts/IndexLayout';
 import { flatArray } from '@utils/tools';
 
@@ -33,7 +33,6 @@ class IndexPage extends React.Component {
               return <Route path={item.path} key={item.path} component={ item.component ? item.component : () => <div>{item.path}</div> }/>
             }) 
           }
-          <Route path='/project/edit/:id' component={() => <div>edit</div>}/>
           <Redirect to="/index/"/>
         </Switch>
       </IndexLayout>
