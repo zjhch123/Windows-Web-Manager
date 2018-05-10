@@ -65,7 +65,6 @@ class New extends React.Component {
           <FormItem
             {...formItemLayout}
             label="项目名称"
-            hasFeedback
           >
             {getFieldDecorator('projectName', {
               rules: [
@@ -78,9 +77,8 @@ class New extends React.Component {
           <FormItem
             {...formItemLayout}
             label="一级路径"
-            hasFeedback
           >
-            {getFieldDecorator('projectName', {
+            {getFieldDecorator('firstPath', {
               rules: [
                 { required: true, message: '请选择一级路径' },
               ],
@@ -91,7 +89,7 @@ class New extends React.Component {
                 <Select.Option value="http://api.hduzplus.xyz/">http://api.hduzplus.xyz/</Select.Option>
               </Select>
             )}
-            <a href="javascript:;" onClick={() => this.addRouter()}>添加一级路径</a>
+            <a onClick={() => this.addRouter()}>添加一级路径</a>
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -104,12 +102,17 @@ class New extends React.Component {
               <FormItem
                 {...formItemLayout}
                 label="二级路径"
-                hasFeedback
               >
                 <Input placeholder="请输入二级路径, 留空则自动生成" />
               </FormItem>
             ) : ''
           }
+          <FormItem
+            {...formItemLayout}
+            label="首页"
+          >
+            <Input placeholder="留空则默认为index.html"/>
+          </FormItem>
           <FormItem
             {...formItemLayout}
             label="是否注入脚本"
@@ -121,7 +124,6 @@ class New extends React.Component {
               <FormItem
                 {...formItemLayout}
                 label="脚本链接"
-                hasFeedback
               >
                 {getFieldDecorator('scriptURL', {
                   rules: [

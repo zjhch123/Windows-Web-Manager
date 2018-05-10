@@ -53,7 +53,8 @@ export default [
       {
         name: '文件管理',
         key: 'file_manage',
-        path: '/env/file_manage'
+        path: '/env/file_manage',
+        component: require('@routes/env/file_manage/index.js').default
       },
       {
         name: '一级路径',
