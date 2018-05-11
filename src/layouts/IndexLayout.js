@@ -27,6 +27,7 @@ class IndexLayout extends React.Component {
     return (
       <Layout className={styles["g-container"]}>
         <Sider
+          breakpoint="xl"
           style={{'overflow': 'auto'}}
         >
           <div className={styles["logo"]} />

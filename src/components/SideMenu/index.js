@@ -24,7 +24,7 @@ function renderBar(config) {
         <Menu.Item key={element.key}>
           <Link to={element.path}>
             { !!element.icon && <Icon type={element.icon} /> }
-            { element.name }
+            <span>{element.name}</span>
           </Link>
         </Menu.Item>
       )

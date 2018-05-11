@@ -2,13 +2,15 @@ import {
   Form,
   Input,
   Button,
-  Radio
+  Radio,
+  Select
 } from 'antd';
 import React from 'react'
 import { connect } from 'dva'
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+const Option = Select.Option;
 
 class AddRouterForm extends React.Component {
   state = {
@@ -31,8 +33,8 @@ class AddRouterForm extends React.Component {
 
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
+        xs: { span: 6 },
+        sm: { span: 6 },
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -85,7 +87,17 @@ class AddRouterForm extends React.Component {
           {...formItemLayout}
           label="端口"
         >
-          <Input placeholder="留空则为协议对应的默认端口号：80 / 443"/>
+          <Input placeholder="默认：80 / 443" style={{width: 120}}/>
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="环境"
+        >
+          <Select defaultValue="httpd" style={{width: 120}}>
+            <Option value="httpd">httpd</Option>
+            <Option value="nginx">nginx</Option>
+            <Option value="tomcat" disabled>tomcat</Option>
+          </Select>
         </FormItem>
         <div style={{textAlign: 'center'}}>
           <Button type="primary" htmlType="submit">添加</Button>

@@ -12,6 +12,7 @@ const getAllPath = (config) => {
     } else {
       return {
         path: item.path,
+        exact: !!item.exact,
         component: item.component
       }
     }
@@ -30,7 +31,7 @@ class IndexPage extends React.Component {
         <Switch>
           { 
             flatArray(getAllPath(config)).map(item => {
-              return <Route path={item.path} key={item.path} component={ item.component ? item.component : () => <div>{item.path}</div> }/>
+              return <Route path={item.path} key={item.path} exact={item.exact} component={ item.component ? item.component : () => <div>{item.path}</div> }/>
             }) 
           }
           <Redirect to="/index/"/>

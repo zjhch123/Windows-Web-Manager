@@ -53,7 +53,7 @@ class Runtime extends React.Component {
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar src={runtime[item.name.toLowerCase()].image} size='large'/>}
-                title={<Link to={`/env/update/${item.name.toLowerCase()}`}>{item.name}</Link>}
+                title={<Link to={`/env/runtime/${item.name.toLowerCase()}`}>{item.name}</Link>}
                 description={item.version}
               />
             </List.Item>

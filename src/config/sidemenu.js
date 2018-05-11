@@ -22,13 +22,14 @@ export default [
         name: '项目列表',
         key: 'list',
         path: '/project/list',
+        exact: true,
         component: require('@routes/project/list/index.js').default
       },
       {
         name: '修改项目',
         hidden: true,
         key: 'edit',
-        path: '/project/edit/:id'
+        path: '/project/list/edit/:id'
       }
     ]
   },
@@ -42,13 +43,14 @@ export default [
         name: '运行环境',
         key: 'runtime',
         path: '/env/runtime',
+        exact: true,
         component: require('@routes/env/runtime/index.js').default
       },
       {
         name: '修改环境配置',
         key: 'update',
         hidden: true,
-        path: '/env/update/:env'
+        path: '/env/runtime/:env'
       },
       {
         name: '文件管理',
@@ -59,7 +61,16 @@ export default [
       {
         name: '一级路径',
         key: 'router',
-        path: '/env/router'
+        exact: true,
+        path: '/env/router',
+        component: require('@routes/env/router/index.js').default
+      },
+      {
+        name: '一级路径',
+        key: 'edit_router',
+        exact: true,
+        hidden: true,
+        path: '/env/router/edit/:id',
       }
     ]
   },
@@ -102,11 +113,11 @@ export default [
         key: 'startup_script',
         path: '/setting/startup_script'
       },
-      {
-        name: '时间设置',
-        key: 'time',
-        path: '/setting/time'
-      },
+      // {
+      //   name: '时间设置',
+      //   key: 'time',
+      //   path: '/setting/time'
+      // },
       {
         name: '重启服务器',
         key: 'restart',
