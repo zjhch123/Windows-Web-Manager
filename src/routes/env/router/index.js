@@ -96,7 +96,7 @@ class Router extends React.Component {
     const  dataSource = data.result
     return (
       <div className={styles['g-container']}>
-        <Tabs defaultActiveKey="1" >
+        <Tabs defaultActiveKey="1" tabBarStyle={{marginBottom: 0}}>
           <TabPane tab="一级路径列表" key="1">
             <Table 
               dataSource={dataSource}
@@ -128,7 +128,9 @@ class Router extends React.Component {
             </Table>
           </TabPane>
           <TabPane tab="添加一级路径" key="2">
-            <AddRouterForm / >
+            <div className={styles['m-manage']}>
+              <AddRouterForm />
+            </div>
           </TabPane>
         </Tabs>
       </div>
