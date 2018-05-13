@@ -17,7 +17,7 @@ class StoragePie extends React.Component {
       }
     }
   }
-
+    
   mappingKey(key) {
     switch(key) {
       case 'used': return '已使用'
@@ -30,7 +30,9 @@ class StoragePie extends React.Component {
     const { data } = this.props
     const formatedData = []
     for (let key in data) {
-      if (key === 'total') continue
+      if (key === 'total') {
+        continue
+      }
       formatedData.push({
         item: `${this.mappingKey(key)} | ${formatNumber(data[key] / data.total * 100)}% - ${data[key]}G `,
         count: data[key]

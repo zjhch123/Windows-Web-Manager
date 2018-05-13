@@ -106,7 +106,8 @@ export default [
       {
         name: '用户管理',
         key: 'user',
-        path: '/setting/user'
+        path: '/setting/user',
+        component: require('@routes/setting/user/index.js').default
       },
       {
         name: '开机启动脚本',
