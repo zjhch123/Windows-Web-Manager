@@ -29,7 +29,8 @@ export default [
         name: '修改项目',
         hidden: true,
         key: 'edit',
-        path: '/project/list/edit/:id'
+        path: '/project/list/edit/:id',
+        component: require('@routes/project/list/edit/index.js').default
       }
     ]
   },
@@ -51,6 +52,7 @@ export default [
         key: 'service',
         path: '/env/service',
         exact: true,
+        component: require('@routes/env/service/index.js').default
       },
       {
         name: '修改环境配置',

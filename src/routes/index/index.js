@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'dva'
 import { Card, Col, Row, Progress, Badge } from 'antd'
-import { formatNumber, formatTime, formatDateTime } from '@utils/tools'
+import { formatNumber } from '@utils/tools'
 import StoragePie from '@components/Charts/StoragePie'
+import TimeFormat from '@components/TimeFormat'
+import DashProgress from '@components/DashProgress'
 import styles from './styles.less'
 
 class Index extends React.Component {
@@ -23,8 +25,8 @@ class Index extends React.Component {
     clearInterval(this.interval)
   }
 
-  isMemoryBoom(memory) {
-    return memory.used / memory.total > 0.9
+  isStorageBoom(storage) {
+    return storage.used / storage.total > 0.8
   }
 
   render() {
@@ -55,40 +57,6 @@ class Index extends React.Component {
           </Col>
         </Row>
         <Row className={styles["m-rows"]} gutter={16}>
-          <Col span={24}>
-            <Card loading={isLoading} hoverable title="系统信息">
-              <p><span className={styles['u-system-info-title']}>虚拟平台：</span>{ system.platform }</p>
-              <p><span className={styles['u-system-info-title']}>主机名称：</span>{ system.hostName }</p>
-              <p><span className={styles['u-system-info-title']}>发行版本：</span>{ system.publicVersion }</p>
-              <p><span className={styles['u-system-info-title']}>内核版本：</span>{ system.coreVersion }</p>
-              <p><span className={styles['u-system-info-title']}>CPU个数：</span>{ system.cpuNum } 个</p>
-              <p><span className={styles['u-system-info-title']}>CPU核心：</span>{ system.cpuCore }</p>
-            </Card>
-          </Col>
-        </Row> 
-        <Row className={styles["m-rows"]} gutter={16}>
-          <Col span={6}>
-            <Card loading={isLoading} hoverable title="服务器时间">
-              <p>{ formatTime(time.system) }</p>
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card loading={isLoading} hoverable title="启动时间">
-              <p>{ formatTime(time.start) }</p>
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card loading={isLoading} hoverable title="运行时间">
-              <p>{ formatDateTime(time.run) }</p>
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card loading={isLoading} hoverable title="空闲时间">
-              <p>{formatDateTime(time.free)}&nbsp;&nbsp;<Badge count={`${formatNumber(time.free / time.run * 100)}%`} /></p>
-            </Card>
-          </Col>
-        </Row>
-        <Row className={styles["m-rows"]} gutter={16}>
           <Col span={12}>
             <Card loading={isLoading} hoverable title="内存使用" bodyStyle={{height: 300}}>
               <Row>
@@ -98,19 +66,17 @@ class Index extends React.Component {
               </Row>
               <Row style={{paddingTop: 48}}>
                 <Col span={12} align="center">
-                  <Progress 
-                    type="dashboard" 
-                    percent={memory.used / memory.total * 100} 
-                    format={(percent) => `${formatNumber(percent)}%`}
-                    status={this.isMemoryBoom(memory) ? 'exception' : 'success'}/>
+                  <DashProgress 
+                    data1={memory.used}
+                    data2={memory.total}
+                    checkStatusFunc={(data) => data > 0.9}/>
                   <h3>已使用</h3>
                 </Col>
                 <Col span={12} align="center">
-                  <Progress 
-                    type="dashboard" 
-                    percent={memory.free / memory.total * 100} 
-                    format={(percent) => `${formatNumber(percent)}%`}
-                    status={this.isMemoryBoom(memory) ? 'exception' : 'success'} />
+                  <DashProgress 
+                    data1={memory.free}
+                    data2={memory.total}
+                    checkStatusFunc={(data) => data <= 0.1}/>
                   <h3>未使用</h3>
                 </Col>
               </Row>
@@ -119,6 +85,28 @@ class Index extends React.Component {
           <Col span={12}>
             <Card loading={isLoading} hoverable title="存储空间" bodyStyle={{ height: 300 }}>
               <StoragePie height={250} data={storage}/>
+            </Card>
+          </Col>
+        </Row>
+        <Row className={styles["m-rows"]} gutter={16}>
+          <Col span={6}>
+            <Card loading={isLoading} hoverable title="服务器时间">
+              <TimeFormat data={time.system}/>
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card loading={isLoading} hoverable title="启动时间">
+              <TimeFormat data={time.start}/>
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card loading={isLoading} hoverable title="运行时间">
+              <TimeFormat type="date" data={time.run}/>
+            </Card>
+          </Col>
+          <Col span={6}>
+            <Card loading={isLoading} hoverable title="空闲时间">
+              <TimeFormat type="date" data={time.free} content={<Badge count={`${formatNumber(time.free / time.run * 100)}%`} />}/>
             </Card>
           </Col>
         </Row>

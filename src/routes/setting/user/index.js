@@ -6,9 +6,13 @@ import {
   Button,
   Tag,
   Popconfirm,
-  Icon
+  Icon,
+  Modal
  } from 'antd'
 import styles from './styles.less'
+import AddUserForm from '@components/Form/AddUserForm'
+import AddUserGroupForm from '@components/Form/AddUserGroupForm'
+
 
 const { Column } = Table
 const ButtonGroup = Button.Group
@@ -19,13 +23,21 @@ const data2 = {"msg": "123", "code": 0, "data": [{"gr_gid": 0, "gr_passwd": "x",
 
 class User extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      addUserFormVisible: false,
+      addUserGroupFormVisible: false
+    }
+  }
+
   render() {
     return (
       <div className={styles['g-container']}>
         <Tabs defaultActiveKey="1" tabBarStyle={{marginBottom: 0}}>
           <TabPane tab="用户管理" key="1">
             <div className={styles['m-manage']}>
-              <Button>添加新用户</Button>
+              <Button onClick={() => this.setState({addUserFormVisible: true})}>添加新用户</Button>
             </div>
             <Table 
               pagination={false}
@@ -83,7 +95,7 @@ class User extends React.Component {
           </TabPane>
           <TabPane tab="用户组管理" key="2">
             <div className={styles['m-manage']}>
-              <Button>添加新用户组</Button>
+              <Button onClick={() => this.setState({addUserGroupFormVisible: true})}>添加新用户组</Button>
             </div>
             <Table
               dataSource={data2.data}
@@ -131,6 +143,24 @@ class User extends React.Component {
             </Table>
           </TabPane>
         </Tabs>
+        <Modal
+          title="添加用户"
+          visible={this.state.addUserFormVisible}
+          footer={null}
+          onOk={() => this.setState({addUserFormVisible: false})}
+          onCancel={() => this.setState({addUserFormVisible: false})}
+        >
+          <AddUserForm />
+        </Modal>
+        <Modal
+          title="添加用户组"
+          visible={this.state.addUserGroupFormVisible}
+          footer={null}
+          onOk={() => this.setState({addUserGroupFormVisible: false})}
+          onCancel={() => this.setState({addUserGroupFormVisible: false})}
+        >
+          <AddUserGroupForm />
+        </Modal>
       </div>
     )
   }
