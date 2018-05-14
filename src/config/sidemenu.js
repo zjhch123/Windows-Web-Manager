@@ -76,7 +76,7 @@ export default [
         key: 'edit_router',
         exact: true,
         hidden: true,
-        path: '/env/router/edit/:id',
+        path: '/env/router/edit/:id', 
       }
     ]   
   }, 
