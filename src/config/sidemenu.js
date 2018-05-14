@@ -96,7 +96,8 @@ export default [
       {
         name: 'SSH配置',
         key: 'ssh',
-        path: '/setting/ssh'
+        path: '/setting/ssh',
+        hidden: true
       },
       {
         name: '开机启动脚本',
@@ -107,7 +108,8 @@ export default [
       {
         name: '重启服务器',
         key: 'restart',
-        path: '/setting/restart'
+        path: '/setting/restart',
+        component: require('@routes/setting/restart/index.js').default
       },
     ]
   },

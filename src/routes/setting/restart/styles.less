@@ -1,0 +1,33 @@
+.g-container {
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .m-btn {
+    height: 150px;
+    text-align: center;
+    margin-top: -30px;
+  }
+  .u-btn {
+    width: 150px;
+    height: 150px;
+    border: 1px solid red;
+    border-radius: 50%;
+    line-height: 100px;
+    background: #f5222d;
+    color: white;
+    font-size: 22px;
+    box-shadow: 0 16px 0 gray;
+    outline: none;
+    &:active {
+      margin-top: 8px;
+      box-shadow: 0 8px 0 #555;
+    }
+  }
+}

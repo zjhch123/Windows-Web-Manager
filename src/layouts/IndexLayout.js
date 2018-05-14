@@ -41,7 +41,7 @@ class IndexLayout extends React.Component {
               </a>
             </Dropdown>
           </Header>
-          <Content style={{ padding: 24, minHeight: 280 }}>
+          <Content style={{ padding: 24, minHeight: 280, position: "relative" }}>
             { this.props.children }
           </Content>
         </Layout>
