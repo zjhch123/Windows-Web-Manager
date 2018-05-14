@@ -78,7 +78,7 @@ export default [
         hidden: true,
         path: '/env/router/edit/:id',
       }
-    ]
+    ]   
   },
   {
     name: '系统工具',
