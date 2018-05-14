@@ -79,7 +79,7 @@ export default [
         path: '/env/router/edit/:id',
       }
     ]   
-  },
+  }, 
   {
     name: '系统工具',
     key: 'setting',
