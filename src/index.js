@@ -2,6 +2,11 @@ import dva from 'dva';
 import './index.less';
 import createBrowserHistory from 'history/createBrowserHistory'
 
+import 'codemirror/theme/material.css'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/shell/shell'
+
+
 // 1. Initialize
 const app = dva({
   history: createBrowserHistory()

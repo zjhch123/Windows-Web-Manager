@@ -47,6 +47,12 @@ export default [
         component: require('@routes/env/runtime/index.js').default
       },
       {
+        name: '服务安装',
+        key: 'service',
+        path: '/env/service',
+        exact: true,
+      },
+      {
         name: '修改环境配置',
         key: 'update',
         hidden: true,
@@ -75,34 +81,12 @@ export default [
     ]
   },
   {
-    name: '服务管理',
-    key: 'service',
-    icon: 'database',
-    hasSub: true,
-    sub: [
-      {
-        name: '系统服务',
-        key: 'system',
-        path: '/service/system'
-      },
-      {
-        name: 'HTTP服务',
-        key: 'http',
-        path: '/service/http'
-      },
-      {
-        name: '数据库服务',
-        key: 'db',
-        path: '/service/db'
-      }
-    ]
-  },
-  {
     name: '系统工具',
     key: 'setting',
     icon: 'setting',
     hasSub: true,
     sub: [
+      
       {
         name: '用户管理',
         key: 'user',
@@ -110,15 +94,16 @@ export default [
         component: require('@routes/setting/user/index.js').default
       },
       {
+        name: 'SSH配置',
+        key: 'ssh',
+        path: '/setting/ssh'
+      },
+      {
         name: '开机启动脚本',
         key: 'startup_script',
-        path: '/setting/startup_script'
+        path: '/setting/startup_script',
+        component: require('@routes/setting/startup_script/index.js').default
       },
-      // {
-      //   name: '时间设置',
-      //   key: 'time',
-      //   path: '/setting/time'
-      // },
       {
         name: '重启服务器',
         key: 'restart',
