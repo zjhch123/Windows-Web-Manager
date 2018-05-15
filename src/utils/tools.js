@@ -23,3 +23,17 @@ export function formatDateTime(timestamp) {
   const second = ~~((timestamp -  60 * 60 * 24 * day -  60 * 60 * hour -  60 * minuts))
   return `${day}天${hour}小时${minuts}分${second}秒`
 }
+
+export function mapObjToFormData(obj) {
+  const formData = new FormData()
+  for(let key in obj) {
+    if (key === 'file') {
+      formData.append('file', obj[key][0])
+    }
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key]
+      formData.append(key, value)
+    }
+  }
+  return formData
+}

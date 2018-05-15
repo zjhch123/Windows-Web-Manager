@@ -116,6 +116,25 @@ const proxy = {
         },
       ]
     }
+  },
+  'POST /api/addProject': {
+    code: 200,
+    message: 'Add Success!',
+    result: {
+      url: 'http://139.129.132.196:8888'
+    }
+  },
+  'GET /api/getProject': {
+    code: 200,
+    message: 'success',
+    result: {
+      projectName: '鉴势 - 工控系统信息安全核查及态势感知系统',
+      firstPath: 'https://vis.hdusplus.xyz',
+      secondPath: '',
+      indexPage: 'index.html',
+      scriptURL: 'https://static.hduzplus.xyz/inject.js',
+      status: 0
+    }
   }
 }
 

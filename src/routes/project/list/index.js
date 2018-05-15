@@ -7,7 +7,9 @@ import {
   Select,
   Input,
   Button,
-  Tag
+  Tag,
+  Pagination,
+  Icon
 } from 'antd'
 import { connect } from 'dva'
 import { Link } from 'dva/router'
@@ -22,6 +24,13 @@ class List extends React.Component {
   constructor(props) {
     super(props)
     this.dispatch = this.props.dispatch
+    this.state = {
+      selectedRowKeys: []
+    }
+  }
+
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({ selectedRowKeys });
   }
 
   componentDidMount() {
@@ -52,7 +61,11 @@ class List extends React.Component {
           span: 16
         },
       },
-    };
+    }
+    const rowSelection = {
+      selectedRowKeys: this.state.selectedRowKeys,
+      onChange: this.onSelectChange,
+    }
     return (
       <div className={styles['g-container']}>
         <div className={styles['m-search']}>
@@ -92,12 +105,8 @@ class List extends React.Component {
         <Table 
           dataSource={projects} 
           rowKey="id"
-          pagination={{
-            position: 'bottom',
-            current: page,
-            total: total,
-            pageSize: 10
-          }}>
+          rowSelection={rowSelection}
+          pagination={false}>
             <Column 
               title="项目名"
               dataIndex="name"
@@ -131,6 +140,16 @@ class List extends React.Component {
               render={(text, record) => (<Link to={`/project/list/edit/${record.id}`}>编辑</Link>)}
             />
           </Table>
+          <div className={styles['m-manage']}>
+            <div className={styles['m-btns']}>
+              <Button className={styles['u-btn']}><Icon type="smile-o" />批量上线</Button>
+              <Button className={styles['u-btn']}><Icon type="frown-o" />批量下线</Button>
+              <Button className={styles['u-btn']}><Icon type="delete" />批量删除</Button>
+            </div>
+            <div className={styles['u-pages']}>
+              <Pagination current={page} total={total}/>
+            </div>
+          </div>
       </div>
     )
   }
