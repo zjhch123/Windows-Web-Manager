@@ -13,7 +13,7 @@ class New extends React.Component {
     super(props)
     this.state = {
       needSecondPath: false,
-      shouldInjectScript: false,
+      needInjectScript: false,
       addRouterModal: false
     }
   }
@@ -22,6 +22,13 @@ class New extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        if (!values.indexPage) {
+          values.indexPage = 'index.html'
+        }
+        if (!values.secondPath) {
+          values.secondPath = null
+        }
+        values.needScriptInject = !!values.needScriptInject
         console.log('Received values of form: ', values);
       }
     });
@@ -35,7 +42,7 @@ class New extends React.Component {
 
   handleScriptChange = (checked) => {
     this.setState({
-      shouldInjectScript: checked
+      needInjectScript: checked
     })
   }
 
@@ -95,7 +102,7 @@ class New extends React.Component {
             {...formItemLayout}
             label="是否需要二级路径"
           >
-            <Switch onChange={(checked) => this.handlePathChange(checked)} />
+            <Switch onChange={(checked) => this.handlePathChange(checked)} defaultChecked={false}/>
           </FormItem>
           {
             this.state.needSecondPath ? (
@@ -103,7 +110,9 @@ class New extends React.Component {
                 {...formItemLayout}
                 label="二级路径"
               >
-                <Input placeholder="请输入二级路径, 留空则自动生成" />
+                {getFieldDecorator('secondPath')(
+                  <Input placeholder="请输入二级路径, 留空则自动生成" />
+                )}
               </FormItem>
             ) : ''
           }
@@ -111,16 +120,20 @@ class New extends React.Component {
             {...formItemLayout}
             label="首页"
           >
-            <Input placeholder="留空则默认为index.html"/>
+            {getFieldDecorator('indexPage')(
+              <Input placeholder="留空则默认为index.html" />
+            )}
           </FormItem>
           <FormItem
             {...formItemLayout}
             label="是否注入脚本"
           >
-            <Switch onChange={(checked) => this.handleScriptChange(checked)}/>
+            {getFieldDecorator('needScriptInject')(
+              <Switch onChange={(checked) => this.handleScriptChange(checked)} defaultChecked={false}/>
+            )}
           </FormItem>
           {
-            this.state.shouldInjectScript ? (
+            this.state.needInjectScript ? (
               <FormItem
                 {...formItemLayout}
                 label="脚本链接"
@@ -140,7 +153,7 @@ class New extends React.Component {
             label="项目文件"
           >
             <div className="dropbox">
-              {getFieldDecorator('dragger', {
+              {getFieldDecorator('file', {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
                 rules: [
@@ -149,7 +162,7 @@ class New extends React.Component {
                   }
                 ]
               })(
-                <Upload.Dragger name="files" action="/upload.do">
+                <Upload.Dragger name="files" beforeUpload={() => false}>
                   <p className="ant-upload-drag-icon">
                     <Icon type="inbox" />
                   </p>

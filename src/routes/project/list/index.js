@@ -6,7 +6,8 @@ import {
   Row, Col,
   Select,
   Input,
-  Button
+  Button,
+  Tag
 } from 'antd'
 import { connect } from 'dva'
 import { Link } from 'dva/router'
@@ -122,7 +123,7 @@ class List extends React.Component {
             <Column 
               title="项目状态"
               key="status"
-              render={(text, record) => (<span>{projectStatus(record.status)}</span>)}
+              render={(text, record) => (<Tag color={record.status === 0 ? 'red' : 'green'}>{projectStatus(record.status)}</Tag>)}
             />
             <Column 
               title="操作"
