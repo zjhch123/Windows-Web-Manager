@@ -108,6 +108,12 @@ export default [
         component: require('@routes/setting/startup_script/index.js').default
       },
       {
+        name: '环境变量',
+        key: 'env_var',
+        path: '/setting/env_var',
+        component: require('@routes/setting/env_var/index.js').default
+      },
+      {
         name: '重启服务器',
         key: 'restart',
         path: '/setting/restart',
