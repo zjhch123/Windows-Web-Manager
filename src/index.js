@@ -19,6 +19,8 @@ const app = dva({
 app.model(require('@models/user').default);
 app.model(require('@models/system').default);
 app.model(require('@models/project').default);
+app.model(require('@models/env').default);
+app.model(require('@models/setting').default);
 
 // 4. Router
 app.router(require('./router').default);

@@ -2,6 +2,12 @@ export function flatArray(array) {
   return [].concat(...array)
 }
 
+export function delay(timeout) {
+  return new Promise(res => {
+    setTimeout(res, timeout)
+  })
+}
+
 export function formatNumber(number, fixed = 1) {
   return Number(number).toFixed(fixed)
 }
@@ -36,4 +42,17 @@ export function mapObjToFormData(obj) {
     }
   }
   return formData
+}
+
+export function generateLoadingFunc(thisArg, stateKey) {
+  return async (func, ...rest) => {
+    thisArg.setState({
+      stateKey: true
+    })
+    const result = await func.apply(thisArg, rest)
+    thisArg.setState({
+      stateKey: false
+    })
+    return result
+  }
 }

@@ -9,12 +9,15 @@ import {
   Button,
   Tag,
   Pagination,
-  Icon
+  Icon,
+  Spin,
+  message
 } from 'antd'
 import { connect } from 'dva'
 import { Link } from 'dva/router'
-import { formatTime } from '@utils/tools'
+import { formatTime, generateLoadingFunc } from '@utils/tools'
 import projectStatus from '@config/projectStatus'
+import { changeStatus, deleteProject } from '@services/project'
 import styles from './styles.less'
 
 const { Column } = Table
@@ -25,8 +28,10 @@ class List extends React.Component {
     super(props)
     this.dispatch = this.props.dispatch
     this.state = {
+      isLoading: false,
       selectedRowKeys: []
     }
+    this.loading = generateLoadingFunc(this, 'isLoading')
   }
 
   onSelectChange = (selectedRowKeys) => {
@@ -41,6 +46,27 @@ class List extends React.Component {
     event.preventDefault()
   }
 
+  changeProjectStatus = async (status) => {
+    const result = await changeStatus({
+      status,
+      ids: this.state.selectedRowKeys.join(',')
+    })
+    if (result.data.code === 200) {
+      message.success('批量操作成功!')
+    }
+    this.dispatch({type: 'project/get'})
+  }
+
+  deleteProject = async () => {
+    const result = await deleteProject({
+      ids: this.state.selectedRowKeys.join(',')
+    })
+    if (result.data.code === 200) {
+      message.success('批量操作成功!')
+    }
+    this.dispatch({type: 'project/get'})
+  }
+
   render() {
     const {
       project
@@ -51,16 +77,8 @@ class List extends React.Component {
       total
     } = project
     const formItemLayout = {
-      labelCol: {
-        sm: {
-          span: 8
-        },
-      },
-      wrapperCol: {
-        sm: {
-          span: 16
-        },
-      },
+      labelCol: {sm: {span: 8},},
+      wrapperCol: {sm: {span: 16},}
     }
     const rowSelection = {
       selectedRowKeys: this.state.selectedRowKeys,
@@ -68,45 +86,46 @@ class List extends React.Component {
     }
     return (
       <div className={styles['g-container']}>
-        <div className={styles['m-search']}>
-          <Form onSubmit={(event) => this.handleSubmit(event)}>
-            <Row>
-              <Col span={5}>
-                <Form.Item { ...formItemLayout} label="项目名" >
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={6}>
-                <Form.Item { ...formItemLayout} label="创建时间" >
-                  <DatePicker.RangePicker />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item {...formItemLayout} label="项目链接" >
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item {...formItemLayout} label="项目状态" >
-                  <Select defaultValue="0">
-                    <Select.Option value="0">运行中</Select.Option>
-                    <Select.Option value="1">已下线</Select.Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={3} align="center">
-                <Form.Item {...formItemLayout}>
-                  <Button type="primary" htmlType="submit">搜索</Button>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </div>
-        <Table 
-          dataSource={projects} 
-          rowKey="id"
-          rowSelection={rowSelection}
-          pagination={false}>
+        <Spin spinning={this.state.isLoading}>
+          <div className={styles['m-search']}>
+            <Form onSubmit={(event) => this.handleSubmit(event)}>
+              <Row>
+                <Col span={5}>
+                  <Form.Item { ...formItemLayout} label="项目名" >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item { ...formItemLayout} label="创建时间" >
+                    <DatePicker.RangePicker />
+                  </Form.Item>
+                </Col>
+                <Col span={5}>
+                  <Form.Item {...formItemLayout} label="项目链接" >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={5}>
+                  <Form.Item {...formItemLayout} label="项目状态" >
+                    <Select defaultValue="0">
+                      <Select.Option value="0">运行中</Select.Option>
+                      <Select.Option value="1">已下线</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={3} align="center">
+                  <Form.Item {...formItemLayout}>
+                    <Button type="primary" htmlType="submit">搜索</Button>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+          <Table 
+            dataSource={projects} 
+            rowKey="id"
+            rowSelection={rowSelection}
+            pagination={false}>
             <Column 
               title="项目名"
               dataIndex="name"
@@ -142,14 +161,15 @@ class List extends React.Component {
           </Table>
           <div className={styles['m-manage']}>
             <div className={styles['m-btns']}>
-              <Button className={styles['u-btn']}><Icon type="smile-o" />批量上线</Button>
-              <Button className={styles['u-btn']}><Icon type="frown-o" />批量下线</Button>
-              <Button className={styles['u-btn']}><Icon type="delete" />批量删除</Button>
+              <Button className={styles['u-btn']} onClick={() => this.loading(this.changeProjectStatus, 1)}><Icon type="smile-o" />批量上线</Button>
+              <Button className={styles['u-btn']} onClick={() => this.loading(this.changeProjectStatus, 0)}><Icon type="frown-o" />批量下线</Button>
+              <Button className={styles['u-btn']} onClick={() => this.loading(this.deleteProject)}><Icon type="delete" />批量删除</Button>
             </div>
             <div className={styles['u-pages']}>
               <Pagination current={page} total={total}/>
             </div>
           </div>
+        </Spin>
       </div>
     )
   }

@@ -2,11 +2,12 @@ import React from 'react'
 import {
   Form, Switch, Input, Select, 
   Button, Upload, Icon, Modal, message, Spin
-} from 'antd';
+} from 'antd'
+import { connect } from 'dva'
 import styles from './styles.less'
 import AddRouterForm from '@components/Form/AddRouterForm'
 import { addProject } from '@services/project'
-import { mapObjToFormData } from '@utils/tools'
+import { mapObjToFormData, generateLoadingFunc } from '@utils/tools'
 
 const FormItem = Form.Item;
 
@@ -21,6 +22,11 @@ class New extends React.Component {
       isLoading: false,
       url: null
     }
+    this.loading = generateLoadingFunc(this, 'isLoading')
+  }
+
+  componentDidMount = () => {
+    this.props.dispatch({ type: 'env/firstPath' })
   }
 
   handleSubmit = (e) => {
@@ -34,15 +40,12 @@ class New extends React.Component {
           values.secondPath = null
         }
         values.needScriptInject = !!values.needScriptInject
-        this.upload(values)
+        this.loading(this.upload, values)
       }
     });
   }
 
   upload = async (data) => {
-    this.setState({
-      isLoading: true
-    })
     const result = await addProject(mapObjToFormData(data))
     if (result.data.code === 200) {
       Modal.success({
@@ -52,9 +55,6 @@ class New extends React.Component {
     } else {
       message.success('添加项目失败, 请重新试试~')
     }
-    this.setState({
-      isLoading: false
-    })
   }
 
   handlePathChange = (checked) => {
@@ -70,7 +70,6 @@ class New extends React.Component {
   }
 
   normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -118,9 +117,11 @@ class New extends React.Component {
                 ],
               })(
                 <Select>
-                  <Select.Option value="http://139.129.132.196/">http://139.129.132.196/</Select.Option>
-                  <Select.Option value="http://static.hduzplus.xyz/">http://static.hduzplus.xyz/</Select.Option>
-                  <Select.Option value="http://api.hduzplus.xyz/">http://api.hduzplus.xyz/</Select.Option>
+                  {
+                    this.props.env.firstPath.map(item => (
+                      <Select.Option value={item.url} key={item.id}>{item.url}</Select.Option>
+                    ))
+                  }
                 </Select>
               )}
               <a onClick={() => this.addRouter()}>添加一级路径</a>
@@ -218,4 +219,4 @@ class New extends React.Component {
 
 const WrappedNew = Form.create()(New);
 
-export default WrappedNew
+export default connect(state => ({env: state.env}))(WrappedNew)

@@ -12,12 +12,12 @@ export default {
   effects: {
     *get(action, { put, call }) {
       const data = yield call(getProjects)
-      yield put({type: 'getSetUp', payload: { result: data.data.result }})
+      yield put({type: 'setup', payload: { result: data.data.result }})
     },
   },
 
   reducers: {
-    getSetUp(state, { payload: { result } }) {
+    setup(state, { payload: { result } }) {
       return {
         ...state,
         projects: result.data,

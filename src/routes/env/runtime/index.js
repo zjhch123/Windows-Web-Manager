@@ -7,51 +7,19 @@ import {
 } from 'dva/router'
 import runtime from '@config/runtime'
 
-const data = [
-  {
-    name: 'Java',
-    version: 'Java(TM) SE Runtime Environment (build 1.8.0_65-b17)'
-  },
-  {
-    name: 'NodeJS',
-    version: 'v8.9.0'
-  },
-  {
-    name: 'Python',
-    version: 'Python 2.7.3'
-  },
-  {
-    name: 'PHP',
-    version: 'version 5.7'
-  },
-  {
-    name: 'httpd',
-    version: 'Server version: Apache/2.2.15 (Unix)'
-  },
-  {
-    name: 'mongoDB',
-    version: 'MongoDB shell version: 3.2.13'
-  },
-  {
-    name: 'mysql',
-    version: '5.7.9'
-  },
-  {
-    name: 'nginx',
-    version: 'Server version: Nginx/1.2.3'
-  },
-];
 
 class Runtime extends React.Component {
-  render() {
-    const system = {
-      platform: 'KVM',
-      hostName: 'iZ28b1b52l9Z',
-      publicVersion: 'CentOS 6.5 Final',
-      coreVersion: 'Linux 2.6.32-431.23.3.el6.x86_64 #1 SMP Thu Jul 31 17:20:51 UTC 2014',
-      cpuNum: 1,
-      cpuCore: 'Intel(R) Xeon(R) CPU E5-2682 v4 @ 2.50GHz (64bit)'
+
+  componentDidMount() {
+    if (!this.props.env.isLaunch){
+     this.props.dispatch({type: "env/info"})
     }
+    this.props.dispatch({type: "env/installed"})
+  }
+
+  render() {
+    const system = this.props.env.info
+    const installedData = this.props.env.installed
     return (
       <div className={styles['g-container']}>
         <Row className={styles['m-row']}>
@@ -68,7 +36,7 @@ class Runtime extends React.Component {
           <Card title="安装环境">
             <List
               itemLayout="horizontal"
-              dataSource={data}
+              dataSource={installedData}
               renderItem={item => (
                 <List.Item>
                   <List.Item.Meta
@@ -86,4 +54,4 @@ class Runtime extends React.Component {
   }
 }
 
-export default connect()(Runtime)
+export default connect(((state) => ({env: state.env})))(Runtime)

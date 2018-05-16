@@ -68,7 +68,9 @@ class AddUserForm extends React.Component {
           {...formItemLayout}
           label="备注"
         >
-          <Input />
+          {getFieldDecorator('desc')(
+            <Input />
+          )}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -89,13 +91,22 @@ class AddUserForm extends React.Component {
           {...formItemLayout}
           label="主目录"
         >
-          <Checkbox>是否创建主目录</Checkbox>
+          {getFieldDecorator('mainPath')(
+            <Checkbox checked>是否创建主目录</Checkbox>
+          )}
         </FormItem>
         <FormItem
           {...formItemLayout}
           label="SHELL路径"
         >
-          <Input />
+          {getFieldDecorator('shellPath', {
+              initialValue: '/bin/bash',
+              rules: [
+                { required: true, message: '请输入SHELL路径' }
+              ]
+            })(
+            <Input />
+          )}
         </FormItem>
         <FormItem 
           {...formItemLayout}

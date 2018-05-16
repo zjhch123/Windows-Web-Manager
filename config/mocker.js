@@ -1,6 +1,6 @@
 const proxy = {
   'POST /api/login': { code: 200, token: '123abc' },
-  'GET /api/getInfo': {
+  'GET /api/system/info': {
     code: 200, result: {
       time: {
         system: 1523371675612,
@@ -28,7 +28,7 @@ const proxy = {
       }
     }
   },
-  'GET /api/getProjects': {
+  'GET /api/project/all': {
     code: 200,
     result: {
       page: 1,
@@ -117,14 +117,21 @@ const proxy = {
       ]
     }
   },
-  'POST /api/addProject': {
+  'POST /api/project/add': {
     code: 200,
     message: 'Add Success!',
     result: {
       url: 'http://139.129.132.196:8888'
     }
   },
-  'GET /api/getProject': {
+  'POST /api/project/update': {
+    code: 200,
+    message: 'update Success!',
+    result: {
+      url: 'http://139.129.132.196:8888'
+    }
+  },
+  'GET /api/project/get/1': {
     code: 200,
     message: 'success',
     result: {
@@ -135,7 +142,119 @@ const proxy = {
       scriptURL: 'https://static.hduzplus.xyz/inject.js',
       status: 0
     }
-  }
+  },
+  'POST /api/project/changeStatus': {
+    code: 200,
+    message: 'success'
+  },
+  'POST /api/project/delete': {
+    code: 200,
+    message: 'success'
+  },
+  'GET /api/env/runtime': {
+    code: 200,
+    message: 'success',
+    result: {
+      platform: 'KVM',
+      hostName: 'iZ28b1b52l9Z',
+      publicVersion: 'CentOS 6.5 Final',
+      coreVersion: 'Linux 2.6.32-431.23.3.el6.x86_64 #1 SMP Thu Jul 31 17:20:51 UTC 2014',
+      cpuNum: 1,
+      cpuCore: 'Intel(R) Xeon(R) CPU E5-2682 v4 @ 2.50GHz (64bit)'
+    }
+  },
+  'GET /api/env/installed': {
+    code: 200,
+    message: 'success',
+    result: [
+      {
+        name: 'Java',
+        version: 'Java(TM) SE Runtime Environment (build 1.8.0_65-b17)'
+      },
+      {
+        name: 'NodeJS',
+        version: 'v8.9.0'
+      },
+      {
+        name: 'Python',
+        version: 'Python 2.7.3'
+      },
+      {
+        name: 'PHP',
+        version: 'version 5.7'
+      },
+      {
+        name: 'httpd',
+        version: 'Server version: Apache/2.2.15 (Unix)'
+      },
+      {
+        name: 'mongoDB',
+        version: 'MongoDB shell version: 3.2.13'
+      },
+      {
+        name: 'mysql',
+        version: '5.7.9'
+      },
+      {
+        name: 'nginx',
+        version: 'Server version: Nginx/1.2.3'
+      },
+    ]
+  },
+  'GET /api/env/services': {
+    "code":200,"result":{"http":[{"name":"httpd","status":"running"},{"name":"nginx","status":null}],"ftp":[{"name":"vsftpd","status":null}],"sql":[{"name":"mysqld","status":null},{"name":"mongodb","status":null},{"name":"memcached","status":null}],"mail":[{"name":"sendmail","status":null}],"system":[{"name":"sshd","status":"running"},{"name":"crond","status":"running"},{"name":"iptables","status":"running"},{"name":"NTP","status":"running"}]}
+  },
+  'POST /api/env/services/install': {
+    code: 200,
+    message: 'success'
+  },
+  'GET /api/env/firstPath': {
+    code: 200,
+    message: 'success',
+    result: [
+        {
+          id: 1,
+          url: 'http://139.129.132.196:8888',
+          absPath: '/var/www/static',
+          num: 8,
+          server: 'httpd'
+        },
+        {
+          id: 2,
+          url: 'http://vis.hduzplus.xyz:80',
+          absPath: '/var/www/vis',
+          num: 2,
+          server: 'httpd'
+        },
+        {
+          id: 3,
+          url: 'https://vis.hduzplus.xyz:443',
+          absPath: '/var/www/vis',
+          num: 8,
+          server: 'httpd'
+        },
+        {
+          id: 4,
+          url: 'https://static.hduzplus.xyz:443',
+          absPath: '/var/www/Statics',
+          num: 6,
+          server: 'httpd'
+        },
+        {
+          id: 5,
+          url: 'https://zoe.hduzplus.xyz:443',
+          absPath: '/var/www/zoe',
+          num: 2,
+          server: 'httpd'
+        },
+      ]
+  },
+  'POST /api/env/firstPath/add': {
+    code: 200,
+    message: 'success'
+  },
+  'GET /api/setting/users/all': {"message": "123", "code": 0, "result": [{"pw_dir": "/root", "pw_gid": 0, "pw_passwd": "x", "pw_gecos": "root", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/bin/bash", "pw_name": "root", "lock": false, "pw_gname": "root", "n_fields": 7, "pw_uid": 0}, {"pw_dir": "/bin", "pw_gid": 1, "pw_passwd": "x", "pw_gecos": "bin", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/nologin", "pw_name": "bin", "lock": true, "pw_gname": "bin", "n_fields": 7, "pw_uid": 1}, {"pw_dir": "/sbin", "pw_gid": 2, "pw_passwd": "x", "pw_gecos": "daemon", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/nologin", "pw_name": "daemon", "lock": false, "pw_gname": "daemon", "n_fields": 7, "pw_uid": 2}, {"pw_dir": "/var/adm", "pw_gid": 4, "pw_passwd": "x", "pw_gecos": "adm", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/nologin", "pw_name": "adm", "lock": false, "pw_gname": "adm", "n_fields": 7, "pw_uid": 3}, {"pw_dir": "/var/spool/lpd", "pw_gid": 7, "pw_passwd": "x", "pw_gecos": "lp", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/nologin", "pw_name": "lp", "lock": false, "pw_gname": "lp", "n_fields": 7, "pw_uid": 4}, {"pw_dir": "/sbin", "pw_gid": 0, "pw_passwd": "x", "pw_gecos": "sync", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/bin/sync", "pw_name": "sync", "lock": false, "pw_gname": "root", "n_fields": 7, "pw_uid": 5}, {"pw_dir": "/sbin", "pw_gid": 0, "pw_passwd": "x", "pw_gecos": "shutdown", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/shutdown", "pw_name": "shutdown", "lock": false, "pw_gname": "root", "n_fields": 7, "pw_uid": 6}, {"pw_dir": "/sbin", "pw_gid": 0, "pw_passwd": "x", "pw_gecos": "halt", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/halt", "pw_name": "halt", "lock": false, "pw_gname": "root", "n_fields": 7, "pw_uid": 7}, {"pw_dir": "/var/spool/mail", "pw_gid": 12, "pw_passwd": "x", "pw_gecos": "mail", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/nologin", "pw_name": "mail", "lock": false, "pw_gname": "mail", "n_fields": 7, "pw_uid": 8}, {"pw_dir": "/var/spool/uucp", "pw_gid": 14, "pw_passwd": "x", "pw_gecos": "uucp", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/nologin", "pw_name": "uucp", "lock": true, "pw_gname": "uucp", "n_fields": 7, "pw_uid": 10}, {"pw_dir": "/root", "pw_gid": 0, "pw_passwd": "x", "pw_gecos": "operator", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/nologin", "pw_name": "operator", "lock": false, "pw_gname": "root", "n_fields": 7, "pw_uid": 11}, {"pw_dir": "/usr/games", "pw_gid": 100, "pw_passwd": "x", "pw_gecos": "games", "n_unnamed_fields": 0, "n_sequence_fields": 7, "pw_shell": "/sbin/nologin", "pw_name": "games", "lock": false, "pw_gname": "users", "n_fields": 7, "pw_uid": 12}]},
+  'GET /api/setting/groups/all': {"message": "123", "code": 0, "result": [{"gr_gid": 0, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "root", "n_fields": 4, "gr_mem": []}, {"gr_gid": 1, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "bin", "n_fields": 4, "gr_mem": ["bin", "daemon"]}, {"gr_gid": 2, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "daemon", "n_fields": 4, "gr_mem": ["bin", "daemon"]}, {"gr_gid": 3, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "sys", "n_fields": 4, "gr_mem": ["bin", "adm"]}, {"gr_gid": 4, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "adm", "n_fields": 4, "gr_mem": ["adm", "daemon"]}, {"gr_gid": 5, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "tty", "n_fields": 4, "gr_mem": []}, {"gr_gid": 6, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "disk", "n_fields": 4, "gr_mem": []}, {"gr_gid": 7, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "lp", "n_fields": 4, "gr_mem": ["daemon"]}, {"gr_gid": 8, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "mem", "n_fields": 4, "gr_mem": []}, {"gr_gid": 9, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "kmem", "n_fields": 4, "gr_mem": []}, {"gr_gid": 10, "gr_passwd": "x", "n_sequence_fields": 4, "n_unnamed_fields": 0, "gr_name": "wheel", "n_fields": 4, "gr_mem": []}]},
 }
 
 module.exports = proxy

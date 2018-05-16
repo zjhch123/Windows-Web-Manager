@@ -11,12 +11,6 @@ export default {
 
   state: {
     isLoading: true,
-    platform: 'KVM',
-    hostName: 'iZ28b1b52l9Z',
-    publicVersion: 'CentOS 6.5 Final',
-    coreVersion: 'Linux 2.6.32-431.23.3.el6.x86_64 #1 SMP Thu Jul 31 17:20:51 UTC 2014',
-    cpuNum: 1,
-    cpuCore: 'Intel(R) Xeon(R) CPU E5-2682 v4 @ 2.50GHz (64bit)',
     project: {
       total: 0,
       run: 0,

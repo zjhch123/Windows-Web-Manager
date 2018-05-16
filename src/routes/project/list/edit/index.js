@@ -3,12 +3,16 @@ import {
   Form,
   Input, 
   Button,
-  Spin
+  Spin,
+  message
 } from 'antd'
 import { connect } from 'dva'
 import { withRouter } from 'dva/router'
+import { getProject, changeStatus, deleteProject, updateProject } from '@services/project'
+import { mapObjToFormData, generateLoadingFunc } from '@utils/tools'
+
 import styles from './styles.less'
-import { getProject } from '@services/project'
+
 const FormItem = Form.Item;
 
 class EditProject extends React.Component {
@@ -24,26 +28,32 @@ class EditProject extends React.Component {
       indexPage: '',
       scriptURL: ''
     }
+    this.loading = generateLoadingFunc(this, 'isLoading')
   }
 
-  componentDidMount = async () => {
-    this.setState({
-      isLoading: true
-    })
+  componentDidMount = () => {
+    this.loading(this.getProject)
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        values.id = this.projectId
+        this.loading(this.updateProject, values)
+      }
+    });
+  }
+
+  goback = () => {
+    window.history.go(-1)
+  }
+
+  getProject = async () => {
     const result = await getProject(this.projectId)
-    this.setState({
-      isLoading: false
-    })
     if (result.data.code === 200) {
       const project = result.data.result
-      this.setState({
-        projectName: project.projectName,
-        firstPath: project.firstPath,
-        secondPath: project.secondPath,
-        indexPage: project.indexPage,
-        scriptURL: project.scriptURL,
-        status: project.status
-      })
+      this.setState({...project})
       this.props.form.setFieldsValue({
         projectName: this.state.projectName,
         indexPage: this.state.indexPage
@@ -51,15 +61,32 @@ class EditProject extends React.Component {
     }
   }
 
-  
+  updateProject = async (data) => {
+    const formData = mapObjToFormData(data)
+    const result = await updateProject(formData)
+    if (result.data.code === 200) {
+      message.success('更新成功!')
+    }
+  }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
+  changeProjectStatus = async (status) => {
+    const result = await changeStatus({
+      status,
+      ids: this.projectId
+    })
+    if (result.data.code === 200) {
+      message.success('操作成功!')
+    }
+  }
+
+  deleteProject = async () => {
+    const result = await deleteProject({
+      ids: this.projectId
+    })
+    if (result.data.code === 200) {
+      message.success('操作成功!')
+      this.goback()
+    }
   }
 
   render() {
@@ -71,7 +98,7 @@ class EditProject extends React.Component {
     return (
       <div className={styles['g-container']}>
         <Spin spinning={this.state.isLoading}>
-          <a onClick={() => window.history.go(-1)} style={{marginLeft: '20px'}}>返回上层</a>
+          <a onClick={() => this.goback()} style={{marginLeft: '20px'}}>返回上层</a>
           <Form onSubmit={this.handleSubmit}>
             <FormItem
               {...formItemLayout}
@@ -116,10 +143,10 @@ class EditProject extends React.Component {
               <Button type="primary" htmlType="submit" style={{marginRight: '12px'}}>走起!</Button>
               {
                 this.state.status === 0 
-                ? <Button type="danger" style={{marginRight: '12px'}}>上线</Button>
-                : <Button type="danger" style={{marginRight: '12px'}}>下线</Button>
+                ? <Button type="danger" style={{marginRight: '12px'}} onClick={() => this.loading(this.changeProjectStatus, 1)}>上线</Button>
+                : <Button type="danger" style={{marginRight: '12px'}} onClick={() => this.loading(this.changeProjectStatus, 0)}>下线</Button>
               }
-              <Button type="danger">删除</Button>
+              <Button type="danger" onClick={() => this.loading(this.deleteProject)}>删除</Button>
             </FormItem>
           </Form>
         </Spin>

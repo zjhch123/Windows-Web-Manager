@@ -10,90 +10,16 @@ import AddRouterForm from '@components/Form/AddRouterForm'
 
 const { Column } = Table;
 const TabPane = Tabs.TabPane;
-const data = {
-  result: [
-      {
-        id: 1,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'httpd'
-      },
-      {
-        id: 2,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'httpd'
-      },
-      {
-        id: 3,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'nginx'
-      },
-      {
-        id: 4,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'httpd'
-      },
-      {
-        id: 5,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'httpd'
-      },
-      {
-        id: 6,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'nginx'
-      },
-      {
-        id: 7,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'httpd'
-      },
-      {
-        id: 8,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'nginx'
-      },
-      {
-        id: 9,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'httpd'
-      },
-      {
-        id: 10,
-        url: 'http://139.129.132.196:8888',
-        absPath: '/var/www/static',
-        num: 8,
-        server: 'httpd'
-      },
-    ]
-}
+
 
 class Router extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      addRouterModal: false
-    }
+
+  componentDidMount() {
+    this.props.dispatch({type: 'env/firstPath'})
   }
+
   render() {
-    const  dataSource = data.result
+    const dataSource = this.props.env.firstPath
     return (
       <div className={styles['g-container']}>
         <Tabs defaultActiveKey="1" tabBarStyle={{marginBottom: 0}}>
@@ -138,4 +64,4 @@ class Router extends React.Component {
   }
 }
 
-export default connect()(Router)
+export default connect(state => ({env: state.env}))(Router)
