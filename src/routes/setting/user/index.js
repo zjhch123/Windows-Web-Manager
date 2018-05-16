@@ -39,7 +39,6 @@ class User extends React.Component {
       users,
       groups
     } = this.props.setting
-    console.log(users)
     return (
       <div className={styles['g-container']}>
         <Tabs defaultActiveKey="1" tabBarStyle={{marginBottom: 0}}>
@@ -56,38 +55,31 @@ class User extends React.Component {
                 title="ID"
                 dataIndex="pw_uid"
                 key="pw_uid"
-                align="center"
-              />
+                align="center"/>
               <Column 
                 title="状态"
                 dataIndex="status"
-                render={(text, record) => (<Tag color={record.lock ? 'red' : 'green'}>{record.lock ? '锁定' : '正常'}</Tag>)}
-              />
+                render={(text, record) => (<Tag color={record.lock ? 'red' : 'green'}>{record.lock ? '锁定' : '正常'}</Tag>)}/>
               <Column 
                 title="用户名"
                 dataIndex="pw_name"
-                key="pw_name"
-              />
+                key="pw_name"/>
               <Column 
                 title="备注"
                 dataIndex="pw_gecos"
-                key="pw_gecos"
-              />
+                key="pw_gecos"/>
               <Column 
                 title="用户组"
                 dataIndex="pw_gname"
-                key="pw_gname"
-              />
+                key="pw_gname"/>
               <Column 
                 title="主目录"
                 dataIndex="pw_dir"
-                key="pw_dir"
-              />
+                key="pw_dir"/>
               <Column 
                 title="SHELL路径"
                 dataIndex="pw_shell"
-                key="pw_shell"
-              />
+                key="pw_shell"/>
               <Column 
                 title="操作"
                 key="manage"
@@ -97,8 +89,7 @@ class User extends React.Component {
                     <Button>改</Button>
                     <Button type="danger">删</Button>
                   </ButtonGroup>
-                )}
-              />
+                )}/>
             </Table>
           </TabPane>
           <TabPane tab="用户组管理" key="2">
@@ -115,27 +106,24 @@ class User extends React.Component {
                 title="ID"
                 dataIndex="gr_gid"
                 key="Id"
-                align="center"
-              />
+                align="center"/>
               <Column
                 title="用户组"
                 dataIndex="gr_name"
-                key="gr_name"
-              />
+                key="gr_name"/>
               <Column
                 title="组成员"
                 dataIndex="gr_mem"
                 key="gr_mem"
                 align="center"
-                render={(text) => 
+                render={(text, record) => 
                 <span>{
-                  text.map(item => 
-                    <Popconfirm title="是否确定删除?" okText="确定" cancelText="取消">
+                  text.map((item,) => 
+                    <Popconfirm title="是否确定删除?" okText="确定" cancelText="取消" key={record.gr_gid + item}>
                       <Button size="small" style={{margin: '0 4px'}}>{item}<Icon type="close" style={{fontSize: 12}}/></Button>
                     </Popconfirm>)
                   }
-                </span>}
-              />
+                </span>}/>
               <Column 
                 title="操作"
                 key="gmanage"
@@ -146,8 +134,7 @@ class User extends React.Component {
                     <Button>添</Button>
                     <Button type="danger">删</Button>
                   </ButtonGroup>
-                )}
-              />
+                )}/>
             </Table>
           </TabPane>
         </Tabs>
