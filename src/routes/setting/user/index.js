@@ -11,6 +11,7 @@ import {
  } from 'antd'
 import styles from './styles.less'
 import AddUserForm from '@components/Form/AddUserForm'
+import UpdateUserForm from '@components/Form/UpdateUserForm'
 import AddUserGroupForm from '@components/Form/AddUserGroupForm'
 
 
@@ -25,7 +26,11 @@ class User extends React.Component {
     super(props)
     this.state = {
       addUserFormVisible: false,
-      addUserGroupFormVisible: false
+      updateUserFormVisible: false,
+      addUserGroupFormVisible: false,
+      updateGroupFormVisible: false,
+      updateUser: null,
+      updateGroup: null
     }
   }
 
@@ -86,7 +91,7 @@ class User extends React.Component {
                 align="center"
                 render={(text, record) => (
                   <ButtonGroup size="small">
-                    <Button>改</Button>
+                    <Button onClick={() => this.setState({updateUserFormVisible: true, updateUser: record})}>改</Button>
                     <Button type="danger">删</Button>
                   </ButtonGroup>
                 )}/>
@@ -148,12 +153,19 @@ class User extends React.Component {
           <AddUserForm />
         </Modal>
         <Modal
+          title="修改用户"
+          visible={this.state.updateUserFormVisible}
+          footer={null}
+          onOk={() => this.setState({updateUserFormVisible: false})}
+          onCancel={() => this.setState({updateUserFormVisible: false})}>
+          <UpdateUserForm user={this.state.updateUser}/>
+        </Modal>
+        <Modal
           title="添加用户组"
           visible={this.state.addUserGroupFormVisible}
           footer={null}
           onOk={() => this.setState({addUserGroupFormVisible: false})}
-          onCancel={() => this.setState({addUserGroupFormVisible: false})}
-        >
+          onCancel={() => this.setState({addUserGroupFormVisible: false})}>
           <AddUserGroupForm />
         </Modal>
       </div>
