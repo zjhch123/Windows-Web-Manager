@@ -54,8 +54,8 @@ class StoragePie extends React.Component {
       as: 'percent'
     });
     return (
-      <Chart height={height} data={dv} scale={this.cols} padding={{ bottom: 30 }} onGetG2Instance={(chart) => { setTimeout(() => chart.forceFit(), 0) }} forceFit>
-        <Coord type={'theta'} radius={0.9} innerRadius={0.8} />
+      <Chart height={height} data={dv} scale={this.cols} padding={{ bottom: 80 }} onGetG2Instance={(chart) => { setTimeout(() => chart.forceFit(), 0) }} forceFit>
+        <Coord type={'theta'} radius={0.9} innerRadius={0.7} />
         <Axis name="percent" />
         <Legend position='bottom' />
         <Guide >
