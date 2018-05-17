@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'dva'
 import { Form, Input, Select, Switch, Button, Spin, message } from 'antd';
 import { generateLoadingFunc } from '@utils/tools'
-import { addUser } from '@services/setting'
+import { updateUser } from '@services/setting'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -20,15 +20,10 @@ class AddUserForm extends React.Component {
     this.loading = generateLoadingFunc(this, 'isLoading')
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    console.log(1)
     this.setState({
       isLock: this.props.user.lock
-    })
-  }
-
-  componentWillReceiveProps(newProp) {
-    this.setState({
-      isLock: newProp.user.lock
     })
   }
 
@@ -36,20 +31,19 @@ class AddUserForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        values.mainPath = !!values.mainPath
-        values.lock = !!values.lock
-        this.loading(this.addUser, values)
+        values.lock = this.state.isLock
+        this.loading(this.updateUser, values)
       }
     });
   }
 
-  addUser = async (data) => {
-    const result = await addUser(data)
+  updateUser = async (data) => {
+    const result = await updateUser(data)
     if (result.data.code === 200) {
-      message.success('添加成功!')
+      message.success('修改成功!')
       this.props.dispatch({type: 'setting/users'})
     } else {
-      message.error('添加失败, 请重新提交!')
+      message.error('修改失败, 请重新提交!')
     }
   }
 
@@ -76,7 +70,6 @@ class AddUserForm extends React.Component {
   }
 
   render() {
-    console.log(this.props.user)
     const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
@@ -160,7 +153,7 @@ class AddUserForm extends React.Component {
             <FormItem 
               {...formItemLayout}
               label="是否锁定账户">
-              <Switch checked={this.state.isLock} onChange={() => this.setState({isLock: !this.state.isLock})}/>
+              <Switch defaultChecked={this.props.user.lock}/>
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -189,7 +182,7 @@ class AddUserForm extends React.Component {
               )}
             </FormItem>
             <FormItem style={{textAlign: 'center'}}>
-              <Button type="primary" htmlType="submit">添加!</Button>
+              <Button type="primary" htmlType="submit">修改!</Button>
             </FormItem>
           </Form>
         </Spin>

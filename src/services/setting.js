@@ -67,3 +67,13 @@ export function deleteGroup(ids) {
     body: JSON.stringify({ids})
   })
 }
+
+export function deleteGroupUser(ids) {
+  return request('/api/setting/groups/delete/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    },
+    body: JSON.stringify({ids})
+  })
+}

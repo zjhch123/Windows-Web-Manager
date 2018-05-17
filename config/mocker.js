@@ -273,6 +273,15 @@ const proxy = {
   'POST /api/setting/groups/update': {
     code: 200, message: 'success'
   },
+  'POST /api/setting/users/delete': {
+    code: 200, message: 'success'
+  },
+  'POST /api/setting/groups/delete': {
+    code: 200, message: 'success'
+  },
+  'POST /api/setting/groups/delete/user': {
+    code: 200, message: 'success'
+  },
 }
 
 module.exports = proxy
