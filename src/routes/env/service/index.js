@@ -18,7 +18,7 @@ class Service extends React.Component {
 
   install = async (name) => {
     message.warn(`已开始安装${name}`)
-    const result = await install(name)
+    const result = await install({name})
     await delay(Math.random() * 2000)
     if (result.data.code === 200) {
       message.success(`安装${name}完成`)

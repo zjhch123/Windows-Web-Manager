@@ -49,7 +49,7 @@ class User extends React.Component {
   }
 
   deleteUser = async (id) => {
-    const result = await deleteUser(id)
+    const result = await deleteUser({id})
     if (result.data.code === 200) {
       message.success('删除成功!')
       this.props.dispatch({type: 'setting/users'})
@@ -86,7 +86,7 @@ class User extends React.Component {
   }
 
   deleteGroup = async (id) => {
-    const result = await deleteGroup(id)
+    const result = await deleteGroup({id})
     if (result.data.code === 200) {
       message.success('删除成功!')
       this.props.dispatch({type: 'setting/groups'})

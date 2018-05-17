@@ -1,4 +1,5 @@
 import request from '@utils/request';
+import { jsonPOST } from '@utils/request';
 
 export function getInfo() {
   return request('/api/env/runtime')
@@ -14,13 +15,7 @@ export function getServices() {
 }
 
 export function install(name) {
-  return request('/api/env/services/install', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    body: JSON.stringify({name})
-  })
+  return jsonPOST('/api/env/services/install', name)
 }
 
 export function getFirstPath() {
@@ -37,11 +32,5 @@ export function addFirstPath(data) {
       schema:"http"
     }
   */
-  return request('/api/env/firstPath/add', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  })
+  return jsonPOST('/api/env/firstPath/add', data)
 }

@@ -1,4 +1,5 @@
 import request from '@utils/request';
+import { jsonPOST } from '@utils/request';
 
 export function getProjects() {
   return request('/api/project/all')
@@ -23,13 +24,7 @@ export function changeStatus(data) {
       status: 1
     }
   */
-  return request(`/api/project/changeStatus`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  })
+  return jsonPOST(`/api/project/changeStatus`, data)
 }
 
 export function deleteProject(data) {
@@ -38,13 +33,7 @@ export function deleteProject(data) {
       ids: 1,2,3,4
     }
   */
-  return request(`/api/project/delete`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    body: JSON.stringify(data)
-  })
+  return jsonPOST(`/api/project/delete`, data)
 }
 
 export function updateProject(data) {

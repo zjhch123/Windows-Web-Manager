@@ -28,3 +28,16 @@ export default function request(url, options) {
     .then(data => ({ data }))
     .catch(err => ({ err }));
 }
+
+export function jsonPOST(url, data) {
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    },
+    body: JSON.stringify({data})
+  }).then(checkStatus)
+    .then(parseJSON)
+    .then(data => ({ data }))
+    .catch(err => ({ err }));
+}

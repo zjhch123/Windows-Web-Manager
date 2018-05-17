@@ -6,33 +6,39 @@ import {
   message
 } from 'antd'
 import { connect } from 'dva'
-import CodeMirror from 'react-codemirror';
+import CodeMirror from 'react-codemirror'
+import { getStartScript, saveStartScript } from '@services/setting'
 
-const data = `#!/bin/sh
-
-touch ~/test
-
-source /etc/profile
-
-sh /usr/local/tomcat/bin/catalina.sh start &
-nohup python /usr/local/vpsmate/server.py &
-forever start -o /var/www/screenshow_github_webhook/out.log /var/www/screenshow_github_webhook/deploy.js
-forever start -o /var/www/image/log/out.log -e /var/www/image/log/error.log /var/www/image/src/app.js
-forever start -o /var/www/zoe/log/out.log -e /var/www/zoe/log/error.log /var/www/zoe/app.js
-NODE_ENV=production forever start -o /var/www/Homepage/log/out.log -e /var/www/Homepage/log/error.log /var/www/Homepage/src/app.js
-`
 
 class StartScript extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      inputValue: data,
+      inputValue: '',
+      backValue: '',
       readOnly: "nocursor"
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.refs.editor.getCodeMirror().setSize('100%', 650)
+    const result = await getStartScript()
+    if (result.data.code === 200) {
+      this.setState({
+        inputValue: result.data.result,
+        backValue: result.data.result
+      })
+      this.refs.editor.getCodeMirror().setValue(result.data.result)
+    } else {
+      message.error('数据获取失败!')
+    }
+  }
+
+  backup = () => {
+    this.setState({
+      inputValue: this.state.backValue
+    })
+    this.refs.editor.getCodeMirror().setValue(this.state.backValue)
   }
 
   startEdit = () => {
@@ -42,11 +48,17 @@ class StartScript extends React.Component {
     })
   }
 
-  save = () => {
-    message.success('保存成功')
-    this.setState({
-      readOnly: "nocursor"
-    })
+  save = async () => {
+    const result = await saveStartScript({data: this.state.inputValue})
+    if (result.data.code === 200) {
+      message.success('保存成功!')
+      this.setState({
+        readOnly: "nocursor",
+        backValue: this.state.inputValue
+      })
+    } else {
+      message.error('保存失败, 请重新提交!')
+    }
   }
 
   render() {
@@ -70,7 +82,7 @@ class StartScript extends React.Component {
               ? <Button onClick={() => this.startEdit()} type="danger" className={styles['u-btn']}>编辑</Button>
               : <Button onClick={() => this.save()} type="primary" className={styles['u-btn']}>保存</Button>
           }
-          <Button className={styles['u-btn']}>还原</Button>
+          <Button className={styles['u-btn']} onClick={() => this.backup()}>还原</Button>
         </div>
         <CodeMirror
           className="cm"
