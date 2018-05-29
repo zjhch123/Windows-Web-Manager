@@ -37,12 +37,12 @@ const proxy = {
       total: 18,
       data: [
         {
-          id: 1,
-          name: '测试项目1',
-          createTime: 1513371675612,
-          updateTime: 1512371675612,
-          status: 1,
-          url: 'http://139.129.132.196:8888'
+          id: 1, // 项目id
+          name: '测试项目1', // 项目名
+          createTime: 1513371675612, // 项目创建时间
+          updateTime: 1512371675612, // 项目更新时间
+          status: 1, // 项目状态
+          url: 'http://139.129.132.196:8888' // 项目线上地址
         },
         {
           id: 2,
@@ -288,19 +288,7 @@ const proxy = {
   'GET /api/setting/startup_script': {
     code: 200,
     message: 'success',
-    result: `#!/bin/sh
-
-touch ~/test
-
-source /etc/profile
-
-sh /usr/local/tomcat/bin/catalina.sh start &
-nohup python /usr/local/vpsmate/server.py &
-forever start -o /var/www/screenshow_github_webhook/out.log /var/www/screenshow_github_webhook/deploy.js
-forever start -o /var/www/image/log/out.log -e /var/www/image/log/error.log /var/www/image/src/app.js
-forever start -o /var/www/zoe/log/out.log -e /var/www/zoe/log/error.log /var/www/zoe/app.js
-NODE_ENV=production forever start -o /var/www/Homepage/log/out.log -e /var/www/Homepage/log/error.log /var/www/Homepage/src/app.js
-`
+    result: `#!/bin/sh\ntouch ~/test\nsource /etc/profile\n\nsh /usr/local/tomcat/bin/catalina.sh start &\nnohup python /usr/local/vpsmate/server.py &\nforever start -o /var/www/screenshow_github_webhook/out.log /var/www/screenshow_github_webhook/deploy.js\nforever start -o /var/www/image/log/out.log -e /var/www/image/log/error.log /var/www/image/src/app.js\nforever start -o /var/www/zoe/log/out.log -e /var/www/zoe/log/error.log /var/www/zoe/app.js\nNODE_ENV=production forever start -o /var/www/Homepage/log/out.log -e /var/www/Homepage/log/error.log /var/www/Homepage/src/app.js`
   },
   'POST /api/setting/startup_script/save': {
     code: 200,
@@ -309,24 +297,7 @@ NODE_ENV=production forever start -o /var/www/Homepage/log/out.log -e /var/www/H
   'GET /api/setting/env_var': {
     code: 200,
     message: 'success',
-    result: `
-JAVA_HOME=/usr/java/jdk1.8.0_60
-CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib
-PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin
-export PATH CLASSPATH JAVA_HOME
-
-CATALINA_HOME=/usr/local/tomcat
-
-export CATALINA_HOME
-export PATH=/usr/local/git/bin:$PATH
-PATH=$PATH:/opt/python3/bin
-
-# node
-export NODE_HOME=/usr/local/node-v8.0.0-linux-x64
-export PATH=$PATH:$NODE_HOME/bin
-export NODE_PATH=$NODE_HOME/lib/node_modules
-export PATH=/usr/java/jdk1.8.0_60/bin:/usr/local/git/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/java/jdk1.8.0_60/bin:/usr/java/jdk1.8.0_60/jre/bin:/opt/python3/bin:/usr/local/node-v8.0.0-linux-x64/bin:/root/bin:/usr/local/ImageMagick/bin
-`
+    result: `\nJAVA_HOME=/usr/java/jdk1.8.0_60\nCLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib\nPATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin\nexport PATH CLASSPATH JAVA_HOME\n\nCATALINA_HOME=/usr/local/tomcat\n\nexport CATALINA_HOME\nexport PATH=/usr/local/git/bin:$PATH\nPATH=$PATH:/opt/python3/bin\n\n# node\nexport NODE_HOME=/usr/local/node-v8.0.0-linux-x64\nexport PATH=$PATH:$NODE_HOME/bin\nexport NODE_PATH=$NODE_HOME/lib/node_modules\nexport PATH=/usr/java/jdk1.8.0_60/bin:/usr/local/git/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/java/jdk1.8.0_60/bin:/usr/java/jdk1.8.0_60/jre/bin:/opt/python3/bin:/usr/local/node-v8.0.0-linux-x64/bin:/root/bin:/usr/local/ImageMagick/bin`
   },
   'POST /api/setting/env_var/save': {
     code: 200,
