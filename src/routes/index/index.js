@@ -34,9 +34,9 @@ class Index extends React.Component {
       memory,
       storage,
       time,
-      isLoading
+      isLoading,
+      cpus
     } = this.props.system
-    const system = this.props.system
     return (
       <div>
         <Row className={styles["m-rows"]} gutter={16}>
@@ -56,24 +56,13 @@ class Index extends React.Component {
             </Card>
           </Col>
         </Row>
-        <Row className={styles["m-rows"]}>
-          <Col span={24}>
-            <Card loading={isLoading} hoverable title="CPU使用率" bordered={false}>
-              <Progress 
-                percent={Number(formatNumber(system.cpu))} 
-                status={system.cpu < 40 ? 'success' : (system.cpu < 80 ? 'normal' : 'exception')}
-                format={(percent) => percent + '%'}
-                />
-            </Card>
-          </Col>
-        </Row>
         <Row className={styles["m-rows"]} gutter={16}>
           <Col span={12}>
             <Card loading={isLoading} hoverable title="内存使用" bodyStyle={{height: 250}}>
               <Row>
                 <Col span={8}><span>总量: {memory.total} M</span></Col>
-                <Col span={8}><span>Buffers: {memory.buffers} M</span></Col>
-                <Col span={8}><span>Cached: {memory.cached} M</span></Col>
+                <Col span={8}><span>已使用: {memory.used} M</span></Col>
+                <Col span={8}><span>Buffer + Cache: {memory.buffcache} M</span></Col>
               </Row>
               <Row style={{paddingTop: 36}}>
                 <Col span={12} align="center">
@@ -117,7 +106,28 @@ class Index extends React.Component {
           </Col>
           <Col span={6}>
             <Card loading={isLoading} hoverable title="空闲时间">
-              <TimeFormat type="date" data={time.free} content={<Badge count={`${formatNumber(time.free / time.run * 100)}%`} />}/>
+              <TimeFormat type="date" data={time.free} content={<Badge style={{ backgroundColor: '#52c41a' }} count={`${formatNumber(time.free / time.run * 100)}%`} />}/>
+            </Card>
+          </Col>
+        </Row>
+        <Row className={styles["m-rows"]}>
+          <Col span={24}>
+            <Card loading={isLoading} hoverable title="CPU使用率" bordered={false}>
+              {
+                cpus.map((cpu, index) => {
+                  return (
+                    <div>
+                      <p>核心{index + 1}</p>
+                      <Progress 
+                        key={index}
+                        percent={Number(formatNumber(cpu.percent))} 
+                        status={cpu.percent < 40 ? 'success' : (cpu.percent < 80 ? 'normal' : 'exception')}
+                        format={(percent) => percent + '%'}
+                        />
+                    </div>  
+                    )
+                  })
+              }
             </Card>
           </Col>
         </Row>

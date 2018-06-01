@@ -22,7 +22,7 @@ export default {
       run: 0,
       free: 0,
     },
-    cpu: 0,
+    cpus: [],
     memory: {
       total: 0,
       used: 0,
@@ -64,7 +64,7 @@ export default {
         project: data.result.project,
         time: data.result.time,
         memory: data.result.memory,
-        cpu: data.result.cpu,
+        cpus: data.result.cpus,
         storage: data.result.storage
       }
     }
