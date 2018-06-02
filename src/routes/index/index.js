@@ -35,24 +35,25 @@ class Index extends React.Component {
       storage,
       time,
       isLoading,
-      cpus
+      cpus,
+      project
     } = this.props.system
     return (
       <div>
         <Row className={styles["m-rows"]} gutter={16}>
           <Col span={8}>
             <Card loading={isLoading} hoverable title="项目总数" bodyStyle={{ textAlign: 'center' }}>
-              <span className={styles["u-num"]} style={{ color: '#66CC00' }}>10</span>
+              <span className={styles["u-num"]} style={{ color: '#66CC00' }}>{ project.total }</span>
             </Card>
           </Col>
           <Col span={8}>
             <Card loading={isLoading} hoverable title="正在运行的项目数" bodyStyle={{ textAlign: 'center' }}>
-              <span className={styles["u-num"]} style={{ color: '#66CC00' }}>9</span>
+              <span className={styles["u-num"]} style={{ color: '#66CC00' }}>{ project.run }</span>
             </Card>
           </Col>
           <Col span={8}>
             <Card loading={isLoading} hoverable title="已下线的项目" bodyStyle={{ textAlign: 'center' }}>
-              <span className={styles["u-num"]} style={{ color: '#FF0033' }}>1</span>
+              <span className={styles["u-num"]} style={{ color: '#FF0033' }}>{ project.dead }</span>
             </Card>
           </Col>
         </Row>
@@ -116,10 +117,9 @@ class Index extends React.Component {
               {
                 cpus.map((cpu, index) => {
                   return (
-                    <div>
+                    <div key={index}>
                       <p>核心{index + 1}</p>
                       <Progress 
-                        key={index}
                         percent={Number(formatNumber(cpu.percent))} 
                         status={cpu.percent < 40 ? 'success' : (cpu.percent < 80 ? 'normal' : 'exception')}
                         format={(percent) => percent + '%'}
