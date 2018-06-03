@@ -18,20 +18,26 @@ class Router extends React.Component {
     this.props.dispatch({type: 'env/firstPath'})
   }
 
+  refreshData(index) {
+    if (~~index === 1) {
+      this.props.dispatch({type: 'env/firstPath'})
+    }
+  }
+
   render() {
     const dataSource = this.props.env.firstPath
     return (
       <div className={styles['g-container']}>
-        <Tabs defaultActiveKey="1" tabBarStyle={{marginBottom: 0}}>
+        <Tabs defaultActiveKey="1" tabBarStyle={{marginBottom: 0}} onTabClick={(index) => this.refreshData(index)}>
           <TabPane tab="一级路径列表" key="1">
             <Table 
               dataSource={dataSource}
-              rowKey="id"
+              rowKey="_id"
               pagination={false}>
               <Column
                 title="URL"
-                dataIndex="url"
                 key="url"
+                dataIndex="url"
                 render={(text) => <a href={text} target="_blank">{text}</a>}
               />
               <Column
@@ -40,8 +46,8 @@ class Router extends React.Component {
                 key="absPath"/>
               <Column
                 title="服务器"
-                dataIndex="server"
-                key="server"/>
+                dataIndex="env"
+                key="env"/>
               <Column
                 title="挂载项目数"
                 key="num"
@@ -50,7 +56,7 @@ class Router extends React.Component {
               <Column
                 title="操作"
                 key="manage"
-                render={(text, record) => (<Link to={`/env/router/edit/${record.id}`}>编辑</Link>)}/>
+                render={(text, record) => (<Link to={`/env/router/edit/${record._id}`}>编辑</Link>)}/>
             </Table>
           </TabPane>
           <TabPane tab="添加一级路径" key="2">

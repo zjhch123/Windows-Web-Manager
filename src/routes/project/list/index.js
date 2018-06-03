@@ -156,7 +156,7 @@ class List extends React.Component {
             <Column 
               title="操作"
               key="manage"
-              render={(text, record) => (<Link to={`/project/list/edit/${record.id}`}>编辑</Link>)}
+              render={(text, record) => (<Link to={`/project/list/edit/${record._id}`}>编辑</Link>)}
             />
           </Table>
           <div className={styles['m-manage']}>

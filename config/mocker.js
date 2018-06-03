@@ -10,7 +10,7 @@ const proxy = {
         run: 100000000,
         free: 12345678,
       },
-      cpu: 40,
+      cpus: [{percent:40}],
       project: {
         total: 10,
         run: 9,
@@ -20,6 +20,7 @@ const proxy = {
         total: 1800,
         used: 1700,
         free: 100,
+        buffcache: 200,
         buffers: 40.1,
         cached: 130
       },

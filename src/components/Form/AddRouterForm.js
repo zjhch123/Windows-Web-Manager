@@ -21,7 +21,6 @@ class AddRouterForm extends React.Component {
 
   constructor(props) {
     super(props)
-
     this.state = {
       confirmDirty: false,
       isLoading: false
@@ -43,10 +42,11 @@ class AddRouterForm extends React.Component {
 
   addFirstPath = async (data) => {
     const result = await addFirstPath(data)
-    if (result.data.code === 200) {
-      message.success('添加成功!')
-    } else {
-      message.error('添加失败, 请重新提交!')
+    switch (result.data.code) {
+      case 200: message.success('添加成功!');this.props.dispatch({ type: 'env/firstPath' });break;
+      case 600: message.warning('一级路径信息重复, 请检查');break;
+      case 601: message.error('添加失败, 请尝试重新提交!');break;
+      default: message.error('添加失败, 请尝试重新提交!');
     }
   }
 
@@ -126,7 +126,7 @@ class AddRouterForm extends React.Component {
                   <Select style={{width: 120}}>
                     <Option value="httpd">httpd</Option>
                     <Option value="nginx">nginx</Option>
-                    <Option value="tomcat" disabled>tomcat</Option>
+                    <Option value="tomcat">tomcat</Option>
                   </Select>
                 )
               }

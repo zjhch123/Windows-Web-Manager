@@ -37,7 +37,7 @@ class New extends React.Component {
           values.indexPage = 'index.html'
         }
         if (!values.secondPath) {
-          values.secondPath = null
+          values.secondPath = Math.random().toString(36).substr(2)
         }
         values.needScriptInject = !!values.needScriptInject
         this.loading(this.upload, values)
@@ -119,7 +119,7 @@ class New extends React.Component {
                 <Select>
                   {
                     this.props.env.firstPath.map(item => (
-                      <Select.Option value={item.url} key={item.id}>{item.url}</Select.Option>
+                      <Select.Option value={item.url} key={item._id}>{item.url}</Select.Option>
                     ))
                   }
                 </Select>
