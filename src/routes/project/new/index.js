@@ -47,13 +47,21 @@ class New extends React.Component {
 
   upload = async (data) => {
     const result = await addProject(mapObjToFormData(data))
-    if (result.data.code === 200) {
-      Modal.success({
-        title: '添加项目成功',
-        content: (<div><p>项目地址: {result.data.result.url}</p><a href={result.data.result.url} target="_blank">点我访问</a></div>)
-      })
-    } else {
-      message.success('添加项目失败, 请重新试试~')
+    switch (result.data.code) {
+      case 200:
+        Modal.success({
+          title: '添加项目成功'
+        })
+        break;
+      case 600:
+        message.error('项目信息与已有项目重复, 请检查')
+        break;
+      case 601:
+        message.error('添加项目失败, 请重新试试~')
+        break;
+      default:
+        message.error('添加项目失败, 请重新试试')
+        break;
     }
   }
 
@@ -119,7 +127,7 @@ class New extends React.Component {
                 <Select>
                   {
                     this.props.env.firstPath.map(item => (
-                      <Select.Option value={item.url} key={item._id}>{item.url}</Select.Option>
+                      <Select.Option value={item._id} key={item._id}>{item.url}</Select.Option>
                     ))
                   }
                 </Select>
