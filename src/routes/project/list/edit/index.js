@@ -58,6 +58,8 @@ class EditProject extends React.Component {
         projectName: this.state.projectName,
         indexPage: this.state.indexPage
       })
+    } else {
+      message.warning('更新失败, 请检查信息!')
     }
   }
 
@@ -66,6 +68,9 @@ class EditProject extends React.Component {
     const result = await updateProject(formData)
     if (result.data.code === 200) {
       message.success('更新成功!')
+      this.loading(this.getProject)
+    } else {
+      message.error('更新失败, 请检查数据!')
     }
   }
 
@@ -76,6 +81,9 @@ class EditProject extends React.Component {
     })
     if (result.data.code === 200) {
       message.success('操作成功!')
+      this.loading(this.getProject)
+    } else {
+      message.error('更新失败, 请检查数据!')
     }
   }
 
@@ -136,7 +144,7 @@ class EditProject extends React.Component {
               {...formItemLayout}
               label="脚本链接"
             >
-              <Input placeholder="请输入脚本链接" disabled={true} value={this.state.scriptURL}/>
+              <Input placeholder="请输入脚本链接" disabled={true} value={this.state.scriptURL || '无脚本'}/>
             </FormItem>
             <FormItem
               style={{textAlign: 'center'}}>

@@ -11,7 +11,7 @@ export default {
 
   effects: {
     *get(action, { put, call }) {
-      const data = yield call(getProjects)
+      const data = yield call(getProjects, action.condition)
       yield put({type: 'setup', payload: { result: data.data.result }})
     },
   },
@@ -20,7 +20,7 @@ export default {
     setup(state, { payload: { result } }) {
       return {
         ...state,
-        projects: result.data,
+        projects: result.list,
         page: result.page,
         total: result.total
       }

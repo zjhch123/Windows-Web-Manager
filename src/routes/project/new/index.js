@@ -36,10 +36,20 @@ class New extends React.Component {
         if (!values.indexPage) {
           values.indexPage = 'index.html'
         }
-        if (!values.secondPath) {
-          values.secondPath = Math.random().toString(36).substr(2)
+        if (this.state.needSecondPath) {
+          // 需要二级路径
+          if (!values.secondPath) {
+            // 没填写二级路径
+            values.secondPath = Math.random().toString(36).substr(2)
+          }
+          if (!values.secondPath.startsWith('/')) {
+            values.secondPath = '/' + values.secondPath
+          }
+        } else {
+          // 不需要二级路径
+          values.secondPath = ''
         }
-        values.needScriptInject = !!values.needScriptInject
+        values.needScriptInject = this.state.needInjectScript
         this.loading(this.upload, values)
       }
     });

@@ -52,7 +52,7 @@ class Router extends React.Component {
                 title="挂载项目数"
                 key="num"
                 align="center"
-                render={(text, record) => (<Link to={`/project/list`}>{record.num}</Link>)}/>
+                render={(text, record) => (<Link to={`/project/list?page=1&url=${encodeURIComponent(record.url)}`}>{record.num}</Link>)}/>
               <Column
                 title="操作"
                 key="manage"

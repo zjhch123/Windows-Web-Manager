@@ -1,8 +1,9 @@
 import request from '@utils/request';
 import { jsonPOST } from '@utils/request';
+import qs from 'querystring';
 
-export function getProjects() {
-  return request('/api/project/all')
+export function getProjects(condition) {
+  return request(`/api/project/all?${qs.stringify(condition)}`)
 }
 
 export function addProject(data) {
@@ -13,8 +14,7 @@ export function addProject(data) {
 }
 
 export function getProject(id) {
-  // return request(`/api/project/get/:${id}`)
-  return request(`/api/project/get/1`)
+  return request(`/api/project/get?id=${id}`)
 }
 
 export function changeStatus(data) {

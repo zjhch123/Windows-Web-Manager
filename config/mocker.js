@@ -31,6 +31,7 @@ const proxy = {
       }
     }
   },
+  
   'GET /api/project/all': {
     code: 200,
     result: {
@@ -134,7 +135,7 @@ const proxy = {
       url: 'http://139.129.132.196:8888'
     }
   },
-  'GET /api/project/get/1': {
+  'GET /api/project/get?id=1': {
     code: 200,
     message: 'success',
     result: {
@@ -154,6 +155,7 @@ const proxy = {
     code: 200,
     message: 'success'
   },
+
   'GET /api/env/runtime': {
     code: 200,
     message: 'success',

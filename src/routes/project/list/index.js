@@ -14,7 +14,8 @@ import {
   message
 } from 'antd'
 import { connect } from 'dva'
-import { Link } from 'dva/router'
+import { Link, withRouter } from 'dva/router'
+import qs from 'querystring'
 import { formatTime, generateLoadingFunc } from '@utils/tools'
 import projectStatus from '@config/projectStatus'
 import { changeStatus, deleteProject } from '@services/project'
@@ -29,9 +30,26 @@ class List extends React.Component {
     this.dispatch = this.props.dispatch
     this.state = {
       isLoading: false,
-      selectedRowKeys: []
+      selectedRowKeys: [],
+      page: 1,
+      projectName: '',
+      startTime: 0,
+      endTime: 0,
+      url: '',
+      status: -1,
     }
     this.loading = generateLoadingFunc(this, 'isLoading')
+  }
+
+  getCondition = () => {
+    return {
+      page: this.state.page,
+      projectName: this.state.projectName,
+      startTime: this.state.startTime,
+      endTime: this.state.endTime,
+      url: this.state.url,
+      status: this.state.status,
+    }
   }
 
   onSelectChange = (selectedRowKeys) => {
@@ -39,11 +57,13 @@ class List extends React.Component {
   }
 
   componentDidMount() {
-    this.dispatch({type: 'project/get'})
+    const condition = Object.assign(this.getCondition(), qs.parse(window.location.search.substr(1)))
+    this.getData(condition)
   }
 
   handleSubmit(event) {
     event.preventDefault()
+    this.getData({...this.getCondition(), page: 1})
   }
 
   changeProjectStatus = async (status) => {
@@ -54,7 +74,7 @@ class List extends React.Component {
     if (result.data.code === 200) {
       message.success('批量操作成功!')
     }
-    this.dispatch({type: 'project/get'})
+    this.getData(this.getCondition())
   }
 
   deleteProject = async () => {
@@ -64,7 +84,33 @@ class List extends React.Component {
     if (result.data.code === 200) {
       message.success('批量操作成功!')
     }
-    this.dispatch({type: 'project/get'})
+    this.getData(this.getCondition())
+  }
+
+  handlePageChange = (newPage) => {
+    this.setState({page: newPage})
+    this.getData({...this.getCondition(), page: newPage})
+  }
+
+  getData = (condition) => {
+    this.dispatch({type: 'project/get', condition: condition})
+    this.setState(condition)
+    if (condition.projectName === '') {
+      delete condition.projectName
+    }
+    if (+condition.startTime === 0) {
+      delete condition.startTime
+    }
+    if (+condition.endTime === 0) {
+      delete condition.endTime
+    }
+    if (+condition.status === -1) {
+      delete condition.status
+    }
+    if (condition.url ==='') {
+      delete condition.url
+    }
+    this.props.history.replace({pathname: '/project/list', search: '?' + qs.stringify(condition)})
   }
 
   render() {
@@ -92,24 +138,25 @@ class List extends React.Component {
               <Row>
                 <Col span={5}>
                   <Form.Item { ...formItemLayout} label="项目名" >
-                    <Input />
+                    <Input value={this.state.projectName} onChange={(e) => this.setState({'projectName': e.target.value})}/>
                   </Form.Item>
                 </Col>
                 <Col span={6}>
                   <Form.Item { ...formItemLayout} label="创建时间" >
-                    <DatePicker.RangePicker />
+                    <DatePicker.RangePicker onChange={(e) => this.setState({startTime: e[0]._d.getTime(), endTime: e[1]._d.getTime()})}/>
                   </Form.Item>
                 </Col>
                 <Col span={5}>
                   <Form.Item {...formItemLayout} label="项目链接" >
-                    <Input />
+                    <Input value={this.state.url} onChange={(e) => this.setState({'url': e.target.value})}/>
                   </Form.Item>
                 </Col>
                 <Col span={5}>
                   <Form.Item {...formItemLayout} label="项目状态" >
-                    <Select defaultValue="0">
-                      <Select.Option value="0">运行中</Select.Option>
-                      <Select.Option value="1">已下线</Select.Option>
+                    <Select value={`${this.state.status}`} defaultValue="-1" onChange={(value) => this.setState({'status': Number(value)})}>
+                      <Select.Option value="-1">不限</Select.Option>
+                      <Select.Option value="1">运行中</Select.Option>
+                      <Select.Option value="0">已下线</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -122,14 +169,15 @@ class List extends React.Component {
             </Form>
           </div>
           <Table 
+            style={{minHeight: 614}}
             dataSource={projects} 
-            rowKey="id"
+            rowKey="_id"
             rowSelection={rowSelection}
             pagination={false}>
             <Column 
               title="项目名"
-              dataIndex="name"
-              key="name"
+              dataIndex="projectName"
+              key="projectName"
             />
             <Column 
               title="创建时间"
@@ -166,7 +214,7 @@ class List extends React.Component {
               <Button className={styles['u-btn']} onClick={() => this.loading(this.deleteProject)}><Icon type="delete" />批量删除</Button>
             </div>
             <div className={styles['u-pages']}>
-              <Pagination current={page} total={total}/>
+              <Pagination onChange={(newPage) => this.handlePageChange(newPage)} current={Number(page)} total={Number(total)}/>
             </div>
           </div>
         </Spin>
@@ -176,4 +224,4 @@ class List extends React.Component {
 }
 
 
-export default connect((state) => ({project: state.project}))(List)
+export default withRouter(connect((state) => ({project: state.project}))(List))
