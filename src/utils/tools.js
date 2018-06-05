@@ -47,11 +47,11 @@ export function mapObjToFormData(obj) {
 export function generateLoadingFunc(thisArg, stateKey) {
   return async (func, ...rest) => {
     thisArg.setState({
-      stateKey: true
+      [stateKey]: true
     })
     const result = await func.apply(thisArg, rest)
     thisArg.setState({
-      stateKey: false
+      [stateKey]: false
     })
     return result
   }

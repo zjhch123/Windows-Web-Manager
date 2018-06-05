@@ -213,7 +213,7 @@ class New extends React.Component {
                       <Icon type="inbox" />
                     </p>
                     <p className="ant-upload-text">点击或Drag文件到此处上传</p>
-                    <p className="ant-upload-hint">请上传zip或rar格式压缩文件</p>
+                    <p className="ant-upload-hint">请上传zip格式压缩文件</p>
                   </Upload.Dragger>
                 )}
               </div>

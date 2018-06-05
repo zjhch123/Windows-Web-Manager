@@ -23,7 +23,7 @@ class AddRouterForm extends React.Component {
     super(props)
     this.state = {
       confirmDirty: false,
-      isLoading: false
+      isLoading: false,
     }
     this.loading = generateLoadingFunc(this, 'isLoading')
   }
@@ -71,13 +71,14 @@ class AddRouterForm extends React.Component {
                 label="协议"
               >
               {getFieldDecorator('schema', {
+                initialValue: 'http',
                 rules: [{
                   required: true, message: '请选择协议!',
                 }],
               })(
                 <RadioGroup name="schema">
                   <Radio value="http">http</Radio>
-                  <Radio value="https">https</Radio>
+                  <Radio value="https" disabled>https</Radio>
                 </RadioGroup>
               )}
             </FormItem>
@@ -125,11 +126,27 @@ class AddRouterForm extends React.Component {
                 })(
                   <Select style={{width: 120}}>
                     <Option value="httpd">httpd</Option>
-                    <Option value="nginx">nginx</Option>
+                    <Option value="nginx" disabled>nginx</Option>
                     <Option value="tomcat">tomcat</Option>
                   </Select>
                 )
               }
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="配置方式"
+            >
+              {getFieldDecorator('configType', {
+                initialValue: 'auto',
+                rules: [{
+                  required: true, message: '请选择配置方式!',
+                }],
+              })(
+                <RadioGroup name="configType">
+                  <Radio value="auto">自动配置</Radio>
+                  <Radio value="normal">手动配置</Radio>
+                </RadioGroup>
+              )}
             </FormItem>
             <div style={{textAlign: 'center'}}>
               <Button type="primary" htmlType="submit">添加</Button>
