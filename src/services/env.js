@@ -23,14 +23,9 @@ export function getFirstPath() {
 }
 
 export function addFirstPath(data) {
-  /*
-    {
-      absPath:"/var/www",
-      env:"httpd",
-      firstPath:"www.hduzplus.xyz",
-      port:"80",
-      schema:"http"
-    }
-  */
   return jsonPOST('/api/env/firstPath/add', data)
+}
+
+export function getFirstPathById(id) {
+  return request('/api/env/firstPathById?id=' + id)
 }

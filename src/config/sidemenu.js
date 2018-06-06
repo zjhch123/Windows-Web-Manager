@@ -79,6 +79,7 @@ export default [
         exact: true,
         hidden: true,
         path: '/env/router/edit/:id', 
+        component: require('@routes/env/router/edit/index.js').default
       }
     ]   
   }, 
