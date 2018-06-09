@@ -46,7 +46,9 @@ class AddRouterForm extends React.Component {
       case 200: message.success('添加成功!');this.props.dispatch({ type: 'env/firstPath' });break;
       case 600: message.warning('一级路径信息重复, 请检查');break;
       case 601: message.error('添加失败, 请尝试重新提交!');break;
-      default: message.error('添加失败, 请尝试重新提交!');
+      case 602: message.error('服务器重启失败, 请检查日志!');break;
+      case 603: message.error('一级路径配置写入错误, 请检查日志!');break;
+      default: message.error('添加失败, 服务器异常, 请尝试重新提交!');
     }
   }
 

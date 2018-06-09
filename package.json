@@ -103,7 +103,7 @@
   },
   "proxy": {
     "/api": {
-      "target": "http://10.211.55.4:8000/",
+      "target": "http://10.211.55.4:7897/",
       "pathRewrite": {
         "^/api": ""
       }

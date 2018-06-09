@@ -29,3 +29,7 @@ export function addFirstPath(data) {
 export function getFirstPathById(id) {
   return request('/api/env/firstPathById?id=' + id)
 }
+
+export function updateFirstPath(data) {
+  return jsonPOST('/api/env/updateFirstPath', data)
+}

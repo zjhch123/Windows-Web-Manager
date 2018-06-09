@@ -69,6 +69,15 @@ class New extends React.Component {
       case 601:
         message.error('添加项目失败, 请重新试试~')
         break;
+      case 602:
+        message.error('当前一级路径下已经挂载了二级路径为空的项目')
+        break;
+      case 603:
+        message.error('新项目的二级路径为空，但是一级路径下已经挂载了其他项目')
+        break;
+      case 604:
+        message.error('新项目二级路径不为空但是一级路径下有项目的二级路径与它重复')
+        break;
       default:
         message.error('添加项目失败, 请重新试试')
         break;
@@ -175,7 +184,7 @@ class New extends React.Component {
               label="是否注入脚本"
             >
               {getFieldDecorator('needScriptInject')(
-                <Switch onChange={(checked) => this.handleScriptChange(checked)} defaultChecked={false}/>
+                <Switch onChange={(checked) => this.handleScriptChange(checked)} defaultChecked={false} disabled/>
               )}
             </FormItem>
             {

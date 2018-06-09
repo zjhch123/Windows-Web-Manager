@@ -8,11 +8,12 @@ import {
   Select,
   message
 } from 'antd'
+import {connect} from 'dva'
 import { withRouter } from 'dva/router'
 import { generateLoadingFunc } from '@utils/tools'
 import styles from './styles.less'
 
-import { getFirstPathById } from '@services/env'
+import { getFirstPathById, updateFirstPath } from '@services/env'
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -39,9 +40,21 @@ class EditRouter extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         values.id = this.firstPathId
-        // this.loading(this.updateProject, values)
+        this.loading(this.update, values)
       }
     });
+  }
+
+  update = async (data) => {
+    const result = await updateFirstPath(data)
+    switch (result.data.code) {
+      case 200: message.success('修改成功!');break;
+      case 600: message.warning('一级路径信息重复, 请检查');break;
+      case 601: message.error('修改失败, 请尝试重新提交!');break;
+      case 602: message.error('服务器重启失败, 请检查日志!');break;
+      case 603: message.error('一级路径配置写入错误, 请检查日志!');break;
+      default: message.error('修改失败, 服务器异常, 请尝试重新提交!');
+    }
   }
 
   getFirstPath = async () => {
@@ -108,7 +121,7 @@ class EditRouter extends React.Component {
                   required: true, message: '请输入绝对路径!'
                 }],
               })(
-                <Input placeholder="demo: /var/www/static/" disabled={this.state.isError}/>
+                <Input placeholder="demo: /var/www/static/" disabled/>
               )}
             </FormItem>
             <FormItem
@@ -119,7 +132,7 @@ class EditRouter extends React.Component {
                 getFieldDecorator('port', {
                   initialValue: this.state.project.port,
                 })( 
-                  <Input placeholder="默认：80 / 443" style={{width: 120}} disabled={this.state.isError}/>
+                  <Input placeholder="默认：80 / 443" style={{width: 120}} disabled/>
                 )
               }
             </FormItem>
@@ -150,4 +163,4 @@ class EditRouter extends React.Component {
   }
 }
 const EditRouterForm = Form.create()(EditRouter);
-export default withRouter(EditRouterForm)
+export default withRouter(connect()(EditRouterForm))

@@ -52,7 +52,7 @@ export default [
         key: 'service',
         path: '/env/service',
         exact: true,
-        component: require('@routes/env/service/index.js').default
+        component: require('@routes/env/service/index2.js').default
       },
       {
         name: '修改环境配置',
@@ -64,7 +64,7 @@ export default [
         name: '文件管理',
         key: 'file_manage',
         path: '/env/file_manage',
-        component: require('@routes/env/file_manage/index.js').default
+        component: require('@routes/env/file_manage/index2.js').default
       },
       {
         name: '一级路径',
@@ -94,7 +94,7 @@ export default [
         name: '用户管理',
         key: 'user',
         path: '/setting/user',
-        component: require('@routes/setting/user/index.js').default
+        component: require('@routes/setting/user/index2.js').default
       },
       {
         name: 'SSH配置',
