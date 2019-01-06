@@ -176,7 +176,7 @@ module.exports = {
           // in the main CSS file.
           {
             test: /\.(css|less)$/,
-            exclude: [/node_modules/],
+            // exclude: [/node_modules/],
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
